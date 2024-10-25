@@ -1,0 +1,71 @@
+PARSER_BEGIN(MySimpleParser)
+
+public class MySimpleParser {
+    public static void main(String[] args) throws ParseException {
+        MySimpleParser parser = new MySimpleParser(System.in);
+        parser.parseGameConfig();
+        System.out.println("Parsed successfully.");
+    }
+}
+
+PARSER_END(MySimpleParser)
+
+// Skip spaces, newlines, and carriage returns
+SKIP: { " " | "\n" | "\r" }
+
+// Tokens for the new keywords and parentheses
+TOKEN: {
+    < SIZE: "size" > |
+    < START: "start" > |
+    < GOAL: "goal" > |
+    < NUMBER: (["0"-"9"])+ > |
+    < LPAREN: "(" > |
+    < RPAREN: ")" > |
+    < COMMA: "," >
+}
+
+// Method to parse the full configuration
+void parseGameConfig() :
+{}
+{
+    sizeConfig() startConfig() goalConfig() <EOF>
+}
+
+// Method to parse size (width, height)
+void sizeConfig() :
+{
+    Token width, height;
+}
+{
+    <SIZE> <LPAREN> width=<NUMBER> <COMMA> height=<NUMBER> <RPAREN>
+    {
+        // Now we use the width and height tokens
+        System.out.println("Parsed size: (" + Integer.parseInt(width.image) + ", " + Integer.parseInt(height.image) + ")");
+    }
+}
+
+// Method to parse start (x, y)
+void startConfig() :
+{
+    Token x, y;
+}
+{
+    <START> <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
+    {
+        // Now we use the x and y tokens for the start position
+        System.out.println("Parsed start: (" + Integer.parseInt(x.image) + ", " + Integer.parseInt(y.image) + ")");
+    }
+}
+
+// Method to parse goal (x, y)
+void goalConfig() :
+{
+    Token x, y;
+}
+{
+    <GOAL> <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
+    {
+        // Now we use the x and y tokens for the goal position
+        System.out.println("Parsed goal: (" + Integer.parseInt(x.image) + ", " + Integer.parseInt(y.image) + ")");
+    }
+}

@@ -1,0 +1,50 @@
+size(  12 , 16 )  start (2,2)
+goal   (
+   8 ,   11
+ )  script !{
+b+Ujq{(+5YW%;GJ^O?Y|Qv"mGw89
+@#W7m"G`oWY)u!@bLAr3Zc~0;lV1hrm~02w=
+}
+
+obstacle {
+  at (2,4), (3,14), (6,14), (1,11), (10,6), (7,6), (9,15), (5,6), (3,1), (6,4), (2,5), (3,8), (8,8), (3,11), (11,3), (3,10), (10,15), (11,6), (0,3), (3,6)
+  requires "black helmet", "orange pendant"
+}
+
+script !{
+8BHcwTE8CK1B51Eh5,$J%?@/:N #
+n*
+&"Y{7[N
+upKny/=wi>@57)PQaXd
+}
+
+plugin Bgn.PToDH.OB.wEFtM.caS
+
+item "silver sword" {
+  at (10,13)
+  message "ksU"
+}
+
+item  "black helmet"
+      {   at
+   (   10 ,  0
+  )   
+  ,   (   3,2   )   
+,
+   
+ (   4   ,
+   13)
+, (  8 ,  9
+   ) message
+"SAHk;]"     }   item "worn yellow dagger" {
+  at (8,7), (1,3)
+  message "ygNZ"
+}
+
+item "orange pendant" {
+  at (8,6), (7,2)
+  message "-bfdSpQZ"
+}
+
+plugin vmJBX.CkFm.UDl.RPvu.Amt.HV
+

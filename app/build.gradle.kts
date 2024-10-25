@@ -7,8 +7,8 @@
  */
 
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
     application
+    id("com.intershop.gradle.javacc") version "4.1.3"
 }
 
 repositories {
@@ -20,7 +20,16 @@ dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
 }
-
+javacc {
+    configs {
+        // Simple parser configuration
+        create("simpleparser") {
+            // Replace with your simple parser's .jj file
+            inputFile = file("src/main/jj/MySimpleParser.jj")
+            packageName = "org.example"  // Replace with your desired package name
+        }
+    }
+}
 testing {
     suites {
         // Configure the built-in test suite
