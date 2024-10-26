@@ -1,4 +1,4 @@
-size (10,10)
+size (20,20)
 start (4,0)
 goal (9,0)
 obstacle {

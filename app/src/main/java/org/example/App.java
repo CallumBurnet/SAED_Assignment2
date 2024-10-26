@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class App {
+    public static final int baseMulti = 1;
     public String getGreeting() {
         return "Hello World!";
     }
@@ -23,15 +24,15 @@ public class App {
                 MySimpleParser parser = new MySimpleParser(inputFileStream);
                 int size[] = parser.sizeConfig();
                 int start[] = parser.startConfig();
-                int x = roundToNearestFive(size[0]);
-                int y = roundToNearestFive(size[1]);
+                int x = size[0]*baseMulti;
+                int y = size[1]*baseMulti;
                 int playerX = roundToNearestFive(start[0]);
                 int playerY = roundToNearestFive(start[1]);
                 System.out.println("Player x: " + playerX + " Player Y" + playerY);
 
                 System.out.println(new App().getGreeting());
                 JFrame window = new JFrame(); 
-                GamePanel gamePanel = new GamePanel(size[0],size[1],start[0], start[1]);
+                GamePanel gamePanel = new GamePanel(x,y,start[0] *2, start[1]  *2);
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 window.setResizable(false);   
                 window.setTitle("2d Maze");

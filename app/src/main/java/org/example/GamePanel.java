@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
-import javax.swing.text.PlainDocument;
-
 import org.example.entity.Player;
 import org.example.object.SuperObject;
 import org.example.tile.TileManager;
@@ -16,18 +14,18 @@ public class GamePanel extends JPanel implements Runnable{
     public int originalTileSize = 16; //16x16 characters
     public int scale = 3; // makes it 48 x 48 it scales
     public int tileSize = originalTileSize * scale;
-    public int maxScreenCol = 15;
-    public int maxScreenRow = 15;
+    public int maxScreenCol = 10;
+    public int maxScreenRow = 20;
     public int screenWidth = tileSize * maxScreenCol; //768
     public int screenHeight= tileSize * maxScreenRow; //576
     //FPS
     int FPS = 60;
-    TileManager tileManager = new TileManager(this);
+    TileManager tileManager;
     InputHandler keyH = new InputHandler();
     Thread gameThread;
-    public CollisionDetector cDetector = new CollisionDetector(this);
-    public AssetSetter assetSetter = new AssetSetter(this);
-    public UI ui = new UI(this, keyH);
+    public CollisionDetector cDetector;// = new CollisionDetector(this);
+    public AssetSetter assetSetter;// = new AssetSetter(this);
+    public UI ui;// = new UI(this, keyH);
     //PLAYER
     //default player pos
     int playerX;
@@ -36,16 +34,21 @@ public class GamePanel extends JPanel implements Runnable{
     Player player;
     public SuperObject obj[];
     public GamePanel(int xSize, int ySize, int playerX, int playerY){
-        System.out.println("HERE" + xSize + " " + ySize);
-        this.playerX = playerX * tileSize;
-        this.playerY = playerY * tileSize;
-
-        player = new Player(this, keyH, this.playerX, this.playerY);
-        obj = new SuperObject[10]; //10 slots
         this.maxScreenCol = xSize;
         this.maxScreenRow = ySize;
         this.screenHeight = tileSize * maxScreenRow;
         this.screenWidth = tileSize * maxScreenCol; //768
+        System.out.println("HERE" + xSize + " " + ySize);
+        this.playerX = playerX * tileSize;
+        this.playerY = playerY * tileSize;
+        tileManager = new TileManager(this);
+        cDetector = new CollisionDetector(this);
+        assetSetter = new AssetSetter(this);
+        ui = new UI(this, keyH);
+
+        player = new Player(this, keyH, this.playerX, this.playerY);
+        obj = new SuperObject[10]; //10 slots
+        
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
