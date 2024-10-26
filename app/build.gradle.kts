@@ -28,7 +28,13 @@ javacc {
             inputFile = file("src/main/jj/MySimpleParser.jj")
             packageName = "org.example"  // Replace with your desired package name
         }
+        create("parser") {
+            inputFile = file("src/main/jj/parser.jj")
+            packageName = "org.example"
+            //lookahead = '2'
+        }
     }
+
 }
 testing {
     suites {
