@@ -12,8 +12,8 @@ import org.example.GamePanel;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tile;
-    int mapTileNumber[][];
+    public Tile[] tile;
+    public int mapTileNumber[][];
     public TileManager(GamePanel gp){
         this.gp = gp;
         tile = new Tile[10];
@@ -27,6 +27,7 @@ public class TileManager {
             tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass01.png"));
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+            tile[1].collision = true; //call collision to true
 
         }catch(IOException e){
             e.printStackTrace();

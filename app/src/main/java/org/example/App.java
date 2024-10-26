@@ -3,6 +3,9 @@
  */
 package org.example;
 import javax.swing.JFrame;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class App {
     public String getGreeting() {
@@ -13,25 +16,50 @@ public class App {
         if (args.length > 0) {
             String inputFilePath = args[0];
             try {
+                // Open the input file
+                InputStream inputFileStream = new FileInputStream(inputFilePath);
+                
+                // Pass the file input stream to the parser
+                MySimpleParser parser = new MySimpleParser(inputFileStream);
+                int size[] = parser.sizeConfig();
+                int start[] = parser.startConfig();
+                int x = roundToNearestFive(size[0]);
+                int y = roundToNearestFive(size[1]);
+                int playerX = roundToNearestFive(start[0]);
+                int playerY = roundToNearestFive(start[1]);
+                System.out.println("Player x: " + playerX + " Player Y" + playerY);
+
+                System.out.println(new App().getGreeting());
+                JFrame window = new JFrame(); 
+                GamePanel gamePanel = new GamePanel(size[0],size[1],start[0], start[1]);
+                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                window.setResizable(false);   
+                window.setTitle("2d Maze");
+                window.add(gamePanel);
+                window.pack();
+                window.setLocationRelativeTo(null);
+                window.setVisible(true);
+                gamePanel.setUpGame();
+                gamePanel.startGameThread();
+                // Uncomment the line below to call the parse method
                 //parser.parseGameConfig();  // Call your parse method
+
+                
                 System.out.println("Parsed successfully.");
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found: " + inputFilePath);
+                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             System.out.println("No input file provided.");
         }
-        System.out.println(new App().getGreeting());
-        JFrame window = new JFrame(); 
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);   
-        window.setTitle("2d Maze");
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
-        window.pack();
+        
 
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-        gamePanel.startGameThread();
+        
+    }
+    public static int roundToNearestFive(int value) {
+        return Math.round(value / 5.0f) * 5;
     }
 }

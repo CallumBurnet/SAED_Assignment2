@@ -1,0 +1,28 @@
+size (10,10)
+start (4,0)
+goal (9,0)
+obstacle {
+  at (6,0), (17,0), (4,0)
+  requires "antique white dagger"
+}
+
+plugin tNjr.FgnN.SrUDq.XP.udAa
+
+obstacle {
+  at (2,0)
+  requires "antique white dagger"
+}
+
+item "antique white dagger" {
+  at (19,0)
+  message "[mLIzA"
+}
+
+script !{
+
+05-Y`"aIT.4m266l#7%bmk]u
+Vx33
+LtOIe02"V<m
+{77=O2z|<a'ziqA2-@$8wl6A
+}
+

@@ -1,4 +1,5 @@
 PARSER_BEGIN(MySimpleParser)
+package org.example;
 
 public class MySimpleParser {
     public static void main(String[] args) throws ParseException {
@@ -18,54 +19,118 @@ TOKEN: {
     < SIZE: "size" > |
     < START: "start" > |
     < GOAL: "goal" > |
-    < NUMBER: (["0"-"9"])+ > |
+    < OBSTACLE: "obstacle" > |
+    < ITEM: "item" > |
+    < PLUGIN: "plugin" > |
+    < SCRIPT: "script" > |
+    < REQUIRES: "requires" > |
+    < MESSAGE: "message" > |
+    < STRING_LITERAL: "\"" (~["\""])* "\"" > |
+    < EXCLAMATION: "!" > |
+    < BRACE_OPEN: "{" > |
+    < BRACE_CLOSE: "}" > |
     < LPAREN: "(" > |
     < RPAREN: ")" > |
-    < COMMA: "," >
+    < COMMA: "," > |
+    < NUMBER: (["0"-"9"])+ >
 }
 
 // Method to parse the full configuration
 void parseGameConfig() :
 {}
 {
-    sizeConfig() startConfig() goalConfig() <EOF>
+    sizeConfig() startConfig() goalConfig() (obstacleConfig() | itemConfig() | pluginConfig() | scriptConfig())* <EOF>
 }
 
 // Method to parse size (width, height)
-void sizeConfig() :
+int[] sizeConfig() :
 {
     Token width, height;
 }
 {
     <SIZE> <LPAREN> width=<NUMBER> <COMMA> height=<NUMBER> <RPAREN>
     {
-        // Now we use the width and height tokens
-        System.out.println("Parsed size: (" + Integer.parseInt(width.image) + ", " + Integer.parseInt(height.image) + ")");
+        int parsedWidth = Integer.parseInt(width.image);
+        int parsedHeight = Integer.parseInt(height.image);
+        System.out.println("Parsed size: (" + parsedWidth + ", " + parsedHeight + ")");
+        return new int[]{parsedWidth, parsedHeight}; // Return an array with width and height
     }
 }
 
 // Method to parse start (x, y)
-void startConfig() :
+int[] startConfig() :
 {
     Token x, y;
 }
 {
     <START> <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
     {
-        // Now we use the x and y tokens for the start position
-        System.out.println("Parsed start: (" + Integer.parseInt(x.image) + ", " + Integer.parseInt(y.image) + ")");
+        int startX = Integer.parseInt(x.image);
+        int startY = Integer.parseInt(y.image);
+        System.out.println("Parsed start: (" + startX + ", " + startY + ")");
+        return new int[]{startX, startY}; // Return an array with x and y
     }
 }
 
 // Method to parse goal (x, y)
-void goalConfig() :
+int[] goalConfig() :
 {
     Token x, y;
 }
 {
     <GOAL> <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
     {
-        // Now we use the x and y tokens for the goal position
-        System.out.println("Parsed goal: (" + Integer.parseInt(x.image) + ", " + Integer.parseInt(y.image) + ")");
+        int goalX = Integer.parseInt(x.image);
+        int goalY = Integer.parseInt(y.image);
+        System.out.println("Parsed goal: (" + goalX + ", " + goalY + ")");
+        return new int[]{goalX, goalY}; // Return an array with x and y
+    }
+}
+
+// Method to parse obstacles
+void obstacleConfig() :
+{
+    Token x, y;
+}
+{
+    <OBSTACLE> <BRACE_OPEN> "at" <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN> ("," <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>)* <REQUIRES> <STRING_LITERAL> <BRACE_CLOSE>
+    {
+        System.out.println("Parsed obstacle at (" + x.image + ", " + y.image + ")");
+    }
+}
+
+// Method to parse items
+void itemConfig() :
+{
+    Token itemName, x, y, message;
+}
+{
+    <ITEM> itemName=<STRING_LITERAL> <BRACE_OPEN> "at" <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN> ("," <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>)* <MESSAGE> message=<STRING_LITERAL> <BRACE_CLOSE>
+    {
+        System.out.println("Parsed item: " + itemName.image + " at (" + x.image + ", " + y.image + ") with message: " + message.image);
+    }
+}
+
+// Method to parse plugins
+void pluginConfig() :
+{
+    Token pluginName;
+}
+{
+    <PLUGIN> pluginName=<STRING_LITERAL>
+    {
+        System.out.println("Parsed plugin: " + pluginName.image);
+    }
+}
+
+// Method to parse scripts
+void scriptConfig() :
+{
+    Token scriptContent;
+}
+{
+    <SCRIPT> <EXCLAMATION> <BRACE_OPEN> scriptContent=<STRING_LITERAL> <BRACE_CLOSE>
+    {
+        System.out.println("Parsed script: " + scriptContent.image);
     }
 }

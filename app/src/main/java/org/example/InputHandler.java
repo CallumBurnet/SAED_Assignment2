@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class InputHandler implements KeyListener{
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, tabPressed;
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
@@ -28,6 +28,10 @@ public class InputHandler implements KeyListener{
         if(code == KeyEvent.VK_D){
             rightPressed = true;
         }
+        if(code == KeyEvent.VK_X){
+            tabPressed = true;
+            System.out.println("TABBY");
+        }
     }
 
     @Override
@@ -46,6 +50,9 @@ public class InputHandler implements KeyListener{
         }
         if(code == KeyEvent.VK_D){
             rightPressed = false;
+        }
+        if(code == KeyEvent.VK_X){
+            tabPressed = false;
         }
     }
 

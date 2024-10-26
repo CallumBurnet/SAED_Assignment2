@@ -2,6 +2,7 @@ package org.example.entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -13,15 +14,21 @@ import org.example.InputHandler;
 public class Player extends Entity {
     GamePanel gp;
     InputHandler keyH;
-    public Player(GamePanel gp, InputHandler keyH){
+    public Player(GamePanel gp, InputHandler keyH, int playerX, int playerY){
         this.gp = gp;
         this.keyH = keyH;
+        
+        x = playerX;
+        y = playerY;
+        System.out.println("Player x " + x + y);
+        solidArea = new Rectangle(8,16,32,32);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         setDeafultValues();
         getPlayerImage();
     }
     public void setDeafultValues(){
-        x = 100;
-        y = 100;
+        
         speed = 4;
         direction = "down";
     }
@@ -49,21 +56,45 @@ public class Player extends Entity {
         if(keyH.upPressed ||keyH.downPressed || keyH.leftPressed||keyH.rightPressed){
             if(keyH.upPressed){
                 direction = "up";
-                y -= speed;
-            }
+          }
             if(keyH.downPressed){
                 direction = "down";
     
-                y += speed;
+                
             }
             if(keyH.leftPressed){
                 direction = "left";
     
-                x -= speed;
+                
             }if(keyH.rightPressed){
                 direction = "right";
     
-                x += speed;
+              
+            }
+            //Check tile collision
+            collisionOn = false;
+            gp.cDetector.checkTile(this);
+            //Check object collision
+            int objIndex = gp.cDetector.checkObject(this, true);
+            pickUpItem(objIndex);
+            //If collision false
+            if(collisionOn == false){
+                switch (direction) {
+                    case "up":
+                        y -= speed;
+
+                        break;
+                    case "down":
+                        y += speed;
+                        break;
+                    case "left":
+                        x -= speed;
+                        break;
+                    case "right":
+                        x += speed;
+                        break;
+                    
+                }
             }
             spriteCounter++;
             if(spriteCounter > 20){
@@ -122,5 +153,15 @@ public class Player extends Entity {
                 break;
         }
         g2.drawImage(image, x,y, gp.tileSize, gp.tileSize, null);
+    }
+    public void pickUpItem(int i){
+        if(i != 999){ //999 means we didnt pick up[ anythign]
+            String objectName = gp.obj[i].type;
+            switch(objectName){
+                case "Sword":
+                    
+            }
+            gp.obj[i] = null;
+        }
     }
 }
