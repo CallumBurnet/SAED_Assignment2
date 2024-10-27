@@ -5,16 +5,22 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
+import java.awt.*;
 import javax.imageio.ImageIO;
-
+import java.util.ArrayList;
 import org.example.GamePanel;
 import org.example.InputHandler;
+import org.example.UtilTool;
+import org.example.object.Sword;
+
+import com.google.common.escape.ArrayBasedCharEscaper;
 
 public class Player extends Entity {
     GamePanel gp;
     InputHandler keyH;
+    public ArrayList<Entity> inventory = new ArrayList<>();
     public Player(GamePanel gp, InputHandler keyH, int playerX, int playerY){
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
         
@@ -31,26 +37,37 @@ public class Player extends Entity {
         
         speed = 4;
         direction = "down";
+        //inventory.add(new Sword());
     }
     public void getPlayerImage(){
+       
+            up1 = setup("boy_up_1");
+            left1 = setup("boy_left_1");
+
+            right1 = setup("boy_right_1");
+
+            up2 = setup("boy_up_2");
+
+            down1 = setup("boy_down_1");
+
+            down2 = setup("boy_down_2");
+
+            left2 = setup("boy_left_2");
+            right2 = setup("boy_right_2");
+
+        
+    }
+
+    public BufferedImage setup(String imageName){
+        UtilTool uTool = new UtilTool();
+        BufferedImage scaledImage = null;
         try{
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
-
-
+            scaledImage = ImageIO.read(getClass().getResourceAsStream("/player/" +imageName+".png"));
+            scaledImage = uTool.scaledImage(scaledImage, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();
         }
+        return scaledImage;
     }
     public void update(){
         if(keyH.upPressed ||keyH.downPressed || keyH.leftPressed||keyH.rightPressed){
@@ -76,7 +93,9 @@ public class Player extends Entity {
             gp.cDetector.checkTile(this);
             //Check object collision
             int objIndex = gp.cDetector.checkObject(this, true);
+            
             pickUpItem(objIndex);
+
             //If collision false
             if(collisionOn == false){
                 switch (direction) {
@@ -96,7 +115,7 @@ public class Player extends Entity {
                     
                 }
             }
-            spriteCounter++;
+           spriteCounter++;
             if(spriteCounter > 20){
                 if(spriteNum == 1){
                     spriteNum =2;
@@ -155,13 +174,10 @@ public class Player extends Entity {
         g2.drawImage(image, x,y, gp.tileSize, gp.tileSize, null);
     }
     public void pickUpItem(int i){
-        if(i != 999){ //999 means we didnt pick up[ anythign]
-            String objectName = gp.obj[i].type;
-            switch(objectName){
-                case "Sword":
-                    
-            }
+        if(i != 999 && collisionOn == false){ //999 means we didnt pick up[ anythign]
+            inventory.add(gp.obj[i]);
             gp.obj[i] = null;
+
         }
     }
 }

@@ -8,7 +8,9 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
 import org.example.GamePanel;
+import org.example.UtilTool;
 
 public class TileManager {
     GamePanel gp;
@@ -22,13 +24,18 @@ public class TileManager {
         loadMap();
     }
     public void getTileImage(){
-        try{
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass01.png"));
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
-            tile[1].collision = true; //call collision to true
+        
+        setup(0, "grass01", false);
+        setup(1, "wall", true);
 
+    }
+    public void setup(int index, String imagePath, boolean collision){
+        UtilTool uTool = new UtilTool();
+        try{
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imagePath + ".png"));
+            tile[index].image = uTool.scaledImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].collision = collision;
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -68,7 +75,7 @@ public class TileManager {
         int y = 0;
         while(col < gp.maxScreenCol && row < gp.maxScreenRow){
             int tileNum = mapTileNumber[col][row];
-            g2.drawImage(tile[tileNum].image, x, y, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(tile[tileNum].image, x, y,null);
             col++;
             x += gp.tileSize;
             //GO to next row

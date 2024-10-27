@@ -1,0 +1,111 @@
+size (10,15)
+start (6,4)
+goal (0,10)
+obstacle {
+  at (4,0), (9,14), (4,14), (2,6), (1,0), (6,10)
+  requires "white case", "cheap boot", "magic white amulet", "black gem"
+}
+
+plugin gxAY.QATr.FRz.lSLD.VHQ.rtzZq
+
+script !{
+HQRN@uV)$z*_Qiu!B %=/4(|WELq*7G_QS
+xf-^XD|G&axJ/O9,,c(q#$
+G[IMrv(^Tw(Ry!wX
+}
+
+obstacle {
+  at (8,11), (0,13), (7,5), (3,5), (7,12), (6,9), (5,2), (5,9)
+  requires "white case", "black gem", "magic white amulet", "cheap boot"
+}
+
+script !{
+f;`*rA#rve=edSgQ[D,o3
+zp-EzvC7H<f$4]/~@ B#$@]070;.Z:&
+
+I6vQM|nw?>c0J<T''f
+}
+
+plugin SgnJ.sLgsz.gkIGQ.uKlNw.QCGe
+
+plugin GdPMj.WwgaX.nZf.qAitd
+
+obstacle {
+  at (1,1), (4,5), (9,1), (5,8), (2,0), (0,8), (4,9), (4,8), (7,7)
+  requires "black gem"
+}
+
+item "cheap boot" {
+  at (0,2), (0,4)
+  message "{0#cBn"
+}
+
+obstacle {
+  at (0,10), (3,2), (9,9), (9,6), (3,12), (0,14), (8,2), (0,9), (0,5)
+  requires "cheap boot", "magic white amulet", "white case"
+}
+
+script !{
+RaH@p
+9%c(5Xy[-v!PhlL6z&&yskjQ4*vnyDft
+B="4kBxvzz>c$h5E
+o>t% jJc
+}
+
+plugin RDuN.xiAci.yaqf.ove.EJIO.tDsZ
+
+plugin RLu.fg.jJoGb
+
+script !{
+;8)
+
+nbTbqTX[Qh]agUg|5%W@#OqCiEZq
+}
+
+script !{
+;+n+jj%j5O
+hH92U'n^wW*N:*KpLZk$_9\ Z-
+n/1co3P)kro3X9~DCI.G
+~hHZ)0poQJ?9s!'26ZZDBf/m
+|tL]N mD\NBF2
+}
+
+plugin qn.SOxV.ZM.uTm.yiglb.SfvS
+
+item "white case" {
+  at (3,6)
+  message "nSnWMizG"
+}
+
+item "black gem" {
+  at (2,4), (3,14), (6,7), (9,2)
+  message "NXIOqf"
+}
+
+script !{
+F~yx
+gfnO\YQ.5F*Pd(S%deLgdJ<8
+vI+(e*'l?/K&7I/yId4c`xOBR.d2y8BlO-#q
+p^ 2sZuA|$d_b^)woBQONHS8 vy
+}
+
+obstacle {
+  at (7,4), (2,10), (2,3), (3,13), (7,9)
+  requires "cheap boot", "black gem", "white case", "magic white amulet"
+}
+
+plugin Km.weE.HWC.vk
+
+item "magic white amulet" {
+  at (2,12)
+  message "AGOFR)w0C"
+}
+
+script !{
+2_P;@WKYRV nNGM1%2-hBQwYa NFh9E!uJjB
+Ce,E1cO&dynS@6k7"4v_7<g
+[/6,`xa'<{R&Tky:A@vBL*.'v04ph/D:0ABXx
+>8O:DLj^fJv`M{ O,Qn>%"9 ]Kv?+
+Il1UWF'tN/0'EW\Mshp$Nh
+}
+

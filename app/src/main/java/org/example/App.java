@@ -6,6 +6,10 @@ import javax.swing.JFrame;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class App {
     public static final int baseMulti = 1;
@@ -19,13 +23,56 @@ public class App {
             try {
                 // Open the input file
                 InputStream inputFileStream = new FileInputStream(inputFilePath);
-                
+                Map<String, ArrayList<int[]>> obstacleMap = new HashMap<>();
+                Map<String, ArrayList<int[]>> tempObMap = new HashMap<>();
+
+                Map<String, ArrayList<Item>> itemMap = new HashMap<>();
+                Map<String, ArrayList<Item>> tempItemMap = new HashMap<>();
+                ArrayList<String> plugins = new ArrayList<>();
+                ArrayList<String> scripts = new ArrayList<>();
+
+
                 // Pass the file input stream to the parser
                 MySimpleParser parser = new MySimpleParser(inputFileStream);
                 int size[] = parser.sizeConfig();
                 int start[] = parser.startConfig();
+                int goal[] = parser.goalConfig();
+                String tempPlugins = parser.pluginConfig();
+                System.out.println("PLF" + tempPlugins);
+                String tempScripts = parser.scriptConfig();
+
+                //My Terrible Parsing handler
+                // for(int i = 0; i < 5; i ++){
+                //     tempObMap = parser.obstacleConfig(); // Pass this to the Asset Setter
+                //     tempItemMap = parser.itemConfig();
+                //     String tempPlugins = parser.pluginConfig();
+                //     System.out.println("PLUGIN " + tempPlugins);
+                //     //String tempScript = parser.scriptConfig();
+                //     if(tempObMap != null){
+                //         obstacleMap.putAll(tempObMap);
+
+                //     }if(tempItemMap != null){
+                //         itemMap.putAll(tempItemMap);
+                //     }
+                // }
+                
+                // Assuming 'itemMap' is already populated by parser.itemConfig()
+                for (Map.Entry<String, ArrayList<Item>> entry : itemMap.entrySet()) {
+                    String message = entry.getKey();
+                    ArrayList<Item> items = entry.getValue();
+
+                    System.out.println("Message: " + message);
+                    for (Item item : items) {
+                        System.out.println("Item: " + item); // You might want to customize the toString() method in Item
+                    }
+                }
+
+                
+
+               
                 int x = size[0]*baseMulti;
                 int y = size[1]*baseMulti;
+              
                 int playerX = roundToNearestFive(start[0]);
                 int playerY = roundToNearestFive(start[1]);
                 System.out.println("Player x: " + playerX + " Player Y" + playerY);
@@ -42,12 +89,11 @@ public class App {
                 window.setVisible(true);
                 gamePanel.setUpGame();
                 gamePanel.startGameThread();
+
                 // Uncomment the line below to call the parse method
                 //parser.parseGameConfig();  // Call your parse method
 
-                
-                System.out.println("Parsed successfully.");
-            } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException e) {
                 System.out.println("File not found: " + inputFilePath);
                 e.printStackTrace();
             } catch (Exception e) {

@@ -3,10 +3,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
+import java.util.ArrayList;
 import javax.swing.JPanel;
+
+import org.example.entity.Entity;
 import org.example.entity.Player;
-import org.example.object.SuperObject;
 import org.example.tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -21,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable{
     //FPS
     int FPS = 60;
     TileManager tileManager;
-    InputHandler keyH = new InputHandler();
+    InputHandler keyH = new InputHandler(this);
     Thread gameThread;
     public CollisionDetector cDetector;// = new CollisionDetector(this);
     public AssetSetter assetSetter;// = new AssetSetter(this);
@@ -31,14 +32,15 @@ public class GamePanel extends JPanel implements Runnable{
     int playerX;
     int playerY;
     int playerSpeed = 4;
-    Player player;
-    public SuperObject obj[];
+    public Player player;
+    public Entity obj[];
+    public ArrayList<Entity> entityList = new ArrayList<>();
+
     public GamePanel(int xSize, int ySize, int playerX, int playerY){
         this.maxScreenCol = xSize;
         this.maxScreenRow = ySize;
         this.screenHeight = tileSize * maxScreenRow;
         this.screenWidth = tileSize * maxScreenCol; //768
-        System.out.println("HERE" + xSize + " " + ySize);
         this.playerX = playerX * tileSize;
         this.playerY = playerY * tileSize;
         tileManager = new TileManager(this);
@@ -47,8 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
         ui = new UI(this, keyH);
 
         player = new Player(this, keyH, this.playerX, this.playerY);
-        obj = new SuperObject[10]; //10 slots
-        
+        obj = new Entity[10]; //10 slots
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -102,13 +103,21 @@ public class GamePanel extends JPanel implements Runnable{
         //tile
         tileManager.draw(g2);
         //object
+        entityList.add(player);
+
         for(int i = 0; i < obj.length; i++){
-            if(obj[i] != null){
-                obj[i].draw(g2, this);
+            if(obj[i]!= null){
+                entityList.add(obj[i]);
+
             }
         }
-        //player
-        player.draw(g2);
+
+        for(int i = 0; i < entityList.size(); i++){
+            entityList.get(i).draw(g2);
+        }
+        for(int i = 0; i < entityList.size(); i++){
+            entityList.remove(i);
+        }
         ui.draw(g2);
         g2.dispose(); //mem saver
     }

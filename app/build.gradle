@@ -29,11 +29,11 @@ javacc {
             inputFile = file("src/main/jj/MySimpleParser.jj")
             packageName = "org.example"  // Replace with your desired package name
         }
-        parser {
-            inputFile = file("src/main/jj/parser.jj")
-            packageName = "org.example"
-            //lookahead = '2'
-        }
+        // parser {
+        //     inputFile = file("src/main/jj/parser.jj")
+        //     packageName = "org.example"
+        //     //lookahead = '2'
+        // }
     }
 }
 

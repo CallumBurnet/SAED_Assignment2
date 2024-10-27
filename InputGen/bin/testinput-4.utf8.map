@@ -1,0 +1,79 @@
+size (10,11)
+start (8,2)
+goal (0,9)
+obstacle {
+  at (9,8), (2,1), (9,5)
+  requires "scuffed purple boot"
+}
+
+obstacle {
+  at (5,10), (5,8), (7,4), (8,5)
+  requires "scuffed purple boot"
+}
+
+plugin yJcAe.lbg.RFUpK
+
+obstacle {
+  at (9,0)
+  requires "scuffed purple boot"
+}
+
+plugin dUqnz.jTkl.aDg.dsYky
+
+plugin uuJ.ITPWx.ES.At.SbRC
+
+obstacle {
+  at (2,5), (7,5), (6,6), (3,5)
+  requires "scuffed purple boot"
+}
+
+script !{
+!.c>Ec{jVard-GdWiwuQmO'a,
+}
+
+script !{
+!?DSS9k3U(!>,^>-3@<0o*w`
+}
+
+script !{
+g^jE2m0.wbM(U
+}
+
+item "scuffed purple boot" {
+  at (4,9), (3,3), (6,0), (9,1), (5,2)
+  message "S%vd^VH"
+}
+
+script !{
+!aeT(d`\ILCth@-G6'b<cz_L>^+?%Cg3
+}
+
+obstacle {
+  at (6,10), (5,5)
+  requires "scuffed purple boot"
+}
+
+plugin PHjQU.uCX.esv
+
+obstacle {
+  at (0,1)
+  requires "scuffed purple boot"
+}
+
+obstacle{  at(6
+,   3
+ )  
+,    (
+ 3, 8)   ,     (
+0
+   ,   0)
+ ,   (  2,  9  )   requires  "scuffed purple boot" }  obstacle {
+  at (8,2), (2,4)
+  requires "scuffed purple boot"
+}
+
+obstacle {
+  at (8,0), (8,4), (9,4), (7,0)
+  requires "scuffed purple boot"
+}
+

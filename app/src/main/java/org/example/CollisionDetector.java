@@ -60,6 +60,9 @@ public class CollisionDetector {
         for(int i = 0; i < gp.obj.length; i++){
             if(gp.obj[i] != null){
                 //get entity solid area pos
+                System.out.println("NAME : " + gp.obj[i].name);
+                System.out.println("Solid area" + gp.obj[i].solidArea.width);
+                System.out.println(gp.obj[i].collision);
                 entity.solidArea.x = entity.x + entity.solidArea.x;
                 entity.solidArea.y = entity.y + entity.solidArea.y;
                 //get obj area
@@ -71,6 +74,7 @@ public class CollisionDetector {
                         //using rectangle intersect method for ease
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
                             if(gp.obj[i].collision == true){
+                            
                                 entity.collisionOn = true;
                             }
                             if(player == true){

@@ -4,8 +4,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class InputHandler implements KeyListener{
-
+    GamePanel gp;
     public boolean upPressed, downPressed, leftPressed, rightPressed, tabPressed;
+    public InputHandler(GamePanel gp){
+        this.gp = gp;
+    }
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
@@ -13,27 +16,54 @@ public class InputHandler implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+
         int code = e.getKeyCode();
-
-        if(code == KeyEvent.VK_W){
-            upPressed = true;
-        }
-        if(code == KeyEvent.VK_S){
-            downPressed = true;
-        }
-
-        if(code == KeyEvent.VK_A){
-            leftPressed = true;
-        }
-        if(code == KeyEvent.VK_D){
-            rightPressed = true;
+        if(tabPressed == true){
+            menuManager(code);
+        }else{
+            if(code == KeyEvent.VK_W){
+                upPressed = true;
+            }
+            if(code == KeyEvent.VK_S){
+                downPressed = true;
+            }
+    
+            if(code == KeyEvent.VK_A){
+                leftPressed = true;
+            }
+            if(code == KeyEvent.VK_D){
+                rightPressed = true;
+            }
+            
         }
         if(code == KeyEvent.VK_X){
-            tabPressed = true;
-            System.out.println("TABBY");
+            if(tabPressed == true){
+                tabPressed = false;
+            }else{
+                tabPressed = true;
+                System.out.println("TABBY");
+            }
+            
+        }
+        
+    }
+    public void menuManager(int code){
+        
+        if(code == KeyEvent.VK_W && gp.ui.slotRow != 0){
+            
+            gp.ui.slotRow--;
+        }
+        if(code == KeyEvent.VK_S && gp.ui.slotRow != 3){
+            gp.ui.slotRow++;
+        }
+
+        if(code == KeyEvent.VK_A&& gp.ui.slotCol != 0){
+            gp.ui.slotCol--;
+        }
+        if(code == KeyEvent.VK_D&& gp.ui.slotCol != 5){
+            gp.ui.slotCol++;
         }
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
@@ -51,9 +81,7 @@ public class InputHandler implements KeyListener{
         if(code == KeyEvent.VK_D){
             rightPressed = false;
         }
-        if(code == KeyEvent.VK_X){
-            tabPressed = false;
-        }
+        
     }
 
 }

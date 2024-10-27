@@ -1,15 +1,17 @@
 package org.example.object;
+import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-public class Sword extends SuperObject{
-    public Sword(){
+
+import org.example.GamePanel;
+import org.example.entity.Entity;
+public class Sword extends Entity{
+    public Sword(GamePanel gp){
+        super(gp);
+
         name = "Sword";
-        type = "Sword";
-        try{
-        image  = ImageIO.read(getClass().getResourceAsStream("/objects/diamondSword.png"));
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        down1 = setup("/objects/diamondsword");
+        description = "Long lost";
     }
 }

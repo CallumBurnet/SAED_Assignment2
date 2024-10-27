@@ -1,0 +1,77 @@
+size (3,13)
+start (1,1)
+goal (2,12)
+item "magic yellow case" {
+  at (0,7)
+  message "J0XMf"
+}
+
+obstacle {
+  at (0,12), (2,9), (1,10)
+  requires "glowing crown"
+}
+
+obstacle {
+  at (1,8), (0,4), (2,2), (1,3), (2,1)
+  requires "glowing crown"
+}
+
+plugin lbesF.HMhDL.YCfi.zidSE
+
+plugin IC.ir.ikZCF.iAiEW.wzLj.UZHu
+
+item "glowing crown" {
+  at (2,6), (0,0)
+  message "Bf^wekkQP;"
+}
+
+obstacle {
+  at (1,4)
+  requires "glowing crown", "magic yellow case", "cheap red vial"
+}
+
+plugin AQ.SjWDD.mQGj
+
+script !{
+=>eWsD?:62;)
+UKGnX2Q<"O|
+'r0nJ"5h1B$W/'{Gu)ME8p{O3xDC|I1SF2O6
+0$vU:y
+(gp+yh[9E-T:4qp5jP5">E-12
+}
+
+script !{
+5hp`QUe3.wI=Y7sv{bmX
+e&_5A `CJjI8'/w-9^8r<*Q4p9u@c0[=T:=.
+rtW1b
+'\0JFk[|Q3
+dPyV"nk4I7t /w;k
+}
+
+plugin XJxz.XpO.wF.Do.Pzc.hXU
+
+plugin dN.cPE.nKxqm
+
+script !{
+t:Je.1l$I!h6Rer6g$gbIRh4t/6N?Y
+5II)Q2(^-a*(#OfR,R__uphsW!cKW3CD"&fpx+.G
+i<ahj~^Pk)r%^*OV9=Hw
+nMk OBw=c,_k
+
+}
+
+script !{
+O,M@#F^KE`;YTBxy[-n!|T h/
+ (Qi?M$*^e=fnRr#
+}
+
+item "cheap red vial" {
+  at (1,5)
+  message "xwmxsUc0E"
+}
+
+script !{
+Y'
+xv_TQ;3a(O`E:e,,
+}
+
