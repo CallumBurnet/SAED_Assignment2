@@ -10,7 +10,10 @@ public class GameConfig {
     private int[] start;
     private int[] goal;
     private Map<String, ArrayList<int[]>> obstacles = new HashMap<>();
-    private List<Item> items = new ArrayList<>();
+    Map<String, ArrayList<Item>> itemMap = new HashMap();
+    ArrayList<String> plugins = new ArrayList<>();
+    ArrayList<String> scripts = new ArrayList<>();
+
 
     // Getters and setters
     public void setSize(int[] size) { this.size = size; }
@@ -22,14 +25,22 @@ public class GameConfig {
     public void setGoal(int[] goal) { this.goal = goal; }
     public int[] getGoal() { return goal; }
 
-    public void addObstacle(String requirement, ArrayList<int[]> coords) {
-        this.obstacles.put(requirement, coords);
+    public void addObstacle(String name, ArrayList<int[]> coords) {
+        obstacles.put(name,coords);
     }
     public Map<String, ArrayList<int[]>> getObstacles() { return obstacles; }
 
-    public void addItem(Item item) {
-        this.items.add(item);
+    public void setItem(Map<String, ArrayList<Item>> itemMap) {
+        this.itemMap = itemMap;
     }
-    public List<Item> getItems() { return items; }
+    public void addPlugin(String plugin){
+        plugins.add(plugin);
+    }
+    public void addScript(String script){
+        scripts.add(script);
+    }
+    public Map<String, ArrayList<Item>> getItems() { return itemMap; }
 }
+
+
 

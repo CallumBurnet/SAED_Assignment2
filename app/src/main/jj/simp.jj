@@ -1,0 +1,199 @@
+PARSER_BEGIN(MySimpleParser)
+package org.example;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+
+public class MySimpleParser {
+    Map<String, ArrayList<int[]>> obstacleMap = new HashMap();
+    public static void main(String[] args) throws ParseException {
+        MySimpleParser parser = new MySimpleParser(System.in);
+        parser.parseGameConfig();
+        System.out.println("Parsed successfully.");
+    }
+}
+
+PARSER_END(MySimpleParser)
+
+// Skip spaces, newlines, and carriage returns
+SKIP: { " " | "\n" | "\r" }
+
+// Tokens for the new keywords and parentheses
+TOKEN: {
+    < SIZE: "size" > |
+    < START: "start" > |
+    < GOAL: "goal" > |
+    < OBSTACLE: "obstacle" > |
+    < ITEM: "item" > |
+    < PLUGIN: "plugin" > |
+    < SCRIPT: "script" > |
+    < REQUIRES: "requires" > |
+    < MESSAGE: "message" > |
+    < STRING_LITERAL: "\"" (~["\""])* "\"" > |
+    < EXCLAMATION: "!" > |
+    < BRACE_OPEN: "{" > |
+    < BRACE_CLOSE: "}" > |
+    < LPAREN: "(" > |
+    < RPAREN: ")" > |
+    < COMMA: "," > |
+    <PLUGIN_NAME: (["a"-"z", "A"-"Z"])+ ("." (["a"-"z", "A"-"Z"])+)*>|
+    < SCRIPT_CONTENT : "{" (~["}"])* "}" >|
+
+    < NUMBER: (["0"-"9"])+ >
+    
+}
+
+// Method to parse the full configuration
+void parseGameConfig() :
+{
+        GameConfig config = new GameConfig();
+
+}
+{
+    (sizeConfig(config) | startConfig(config) | goalConfig(config) | obstacleConfig(config) | itemConfig(config) | pluginConfig(config) | scriptConfig(config))* <EOF>
+}
+
+
+void sizeConfig(GameConfig config) :
+{
+    Token width, height;
+}
+{
+    <SIZE> <LPAREN> width=<NUMBER> <COMMA> height=<NUMBER> <RPAREN>
+    {
+        int parsedWidth = Integer.parseInt(width.image);
+        int parsedHeight = Integer.parseInt(height.image);
+        config.setSize(new int[]{parsedWidth, parsedHeight});
+    }
+}
+
+// Method to parse start (x, y) and set in GameConfig
+void startConfig(GameConfig config) :
+{
+    Token x, y;
+}
+{
+    <START> <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
+    {
+        int startX = Integer.parseInt(x.image);
+        int startY = Integer.parseInt(y.image);
+        config.setStart(new int[]{startX, startY});
+    }
+}
+
+// Method to parse goal (x, y) and set in GameConfig
+void goalConfig(GameConfig config) :
+{
+    Token x, y;
+}
+{
+    <GOAL> <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
+    {
+        int goalX = Integer.parseInt(x.image);
+        int goalY = Integer.parseInt(y.image);
+        config.setGoal(new int[]{goalX, goalY});
+    }
+}
+
+// Method to parse obstacles and add to GameConfig
+void obstacleConfig(GameConfig config) :
+{
+    Token x, y, requires;
+    ArrayList<int[]> coords = new ArrayList();
+}
+{
+    <OBSTACLE> <BRACE_OPEN> <AT> <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
+    {
+        coords.add(new int[]{Integer.parseInt(x.image), Integer.parseInt(y.image)});
+    }
+    ("," <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
+    {
+        coords.add(new int[]{Integer.parseInt(x.image), Integer.parseInt(y.image)});
+    })*
+    <REQUIRES> requires=<STRING_LITERAL> <BRACE_CLOSE>
+    {
+        config.addObstacle(requires.image, coords);
+    }
+}
+
+// Method to parse items and add to GameConfig
+void itemConfig(GameConfig config) :
+{
+    Token itemName, x, y, message;
+    ArrayList<Item> items = new ArrayList();
+}
+{
+    <ITEM> itemName=<STRING_LITERAL> <BRACE_OPEN> <AT> <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
+    {
+        items.add(new Item(itemName.image, Integer.parseInt(x.image), Integer.parseInt(y.image), null));
+    }
+    ("," <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
+    {
+        items.add(new Item(itemName.image, Integer.parseInt(x.image), Integer.parseInt(y.image), null));
+    })*
+    <MESSAGE> message=<STRING_LITERAL> <BRACE_CLOSE>
+    {
+        for (Item item : items) {
+            item.setMessage(message.image);
+            config.addItem(item);
+        }
+    }
+}
+
+// Method to parse plugins (if needed)
+void pluginConfig(GameConfig config) :
+{
+    Token pluginName;
+}
+{
+    <PLUGIN> pluginName=<PLUGIN_NAME>
+    {
+        System.out.println("Parsed plugin: " + pluginName.image);
+        // Add plugin data to GameConfig if needed
+    }
+}
+
+// Method to parse scripts and add to GameConfig (if needed)
+void scriptConfig(GameConfig config) :
+{
+    Token scriptContent;
+}
+{
+    <SCRIPT> <EXCLAMATION> scriptContent=<SCRIPT_CONTENT>
+    {
+        String fullScriptContent = scriptContent.image.substring(1, scriptContent.image.length() - 1).trim();
+        System.out.println("Parsed script: " + fullScriptContent);
+        // Add script data to GameConfig if needed
+    }
+}
+
+
+
+// Method to parse scripts
+String scriptConfig() :
+{
+    Token scriptContent;
+}
+{
+    try {
+        <SCRIPT> <EXCLAMATION> scriptContent=<SCRIPT_CONTENT> // Capture everything inside the braces
+        {
+            String fullScriptContent = scriptContent.image;
+            
+            // Remove the leading and trailing braces if needed
+            fullScriptContent = fullScriptContent.substring(1, fullScriptContent.length() - 1).trim();
+
+            System.out.println("Parsed script: " + fullScriptContent);
+            return fullScriptContent; // Return the entire script content
+        }
+    } catch (ParseException e) {
+        System.out.println("Error parsing script: " + e.getMessage());
+        return null;
+    }
+}
+
+
+
+
+

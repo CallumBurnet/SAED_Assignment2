@@ -34,38 +34,26 @@ public class App {
 
                 // Pass the file input stream to the parser
                 MySimpleParser parser = new MySimpleParser(inputFileStream);
-                int size[] = parser.sizeConfig();
-                int start[] = parser.startConfig();
-                int goal[] = parser.goalConfig();
-                String tempPlugins = parser.pluginConfig();
-                System.out.println("PLF" + tempPlugins);
-                String tempScripts = parser.scriptConfig();
+                GameConfig config = parser.parseGameConfig();
+                int[] size= config.getSize();
+                int[] start = config.getStart();
+                int[] goal = config.getGoal();
 
-                //My Terrible Parsing handler
-                // for(int i = 0; i < 5; i ++){
-                //     tempObMap = parser.obstacleConfig(); // Pass this to the Asset Setter
-                //     tempItemMap = parser.itemConfig();
-                //     String tempPlugins = parser.pluginConfig();
-                //     System.out.println("PLUGIN " + tempPlugins);
-                //     //String tempScript = parser.scriptConfig();
-                //     if(tempObMap != null){
-                //         obstacleMap.putAll(tempObMap);
+                // String tempPlugins = parser.pluginConfig();
+                // System.out.println("PLF" + tempPlugins);
+                // String tempScripts = parser.scriptConfig();
 
-                //     }if(tempItemMap != null){
-                //         itemMap.putAll(tempItemMap);
+             
+                // // Assuming 'itemMap' is already populated by parser.itemConfig()
+                // for (Map.Entry<String, ArrayList<Item>> entry : itemMap.entrySet()) {
+                //     String message = entry.getKey();
+                //     ArrayList<Item> items = entry.getValue();
+
+                //     System.out.println("Message: " + message);
+                //     for (Item item : items) {
+                //         System.out.println("Item: " + item); // You might want to customize the toString() method in Item
                 //     }
                 // }
-                
-                // Assuming 'itemMap' is already populated by parser.itemConfig()
-                for (Map.Entry<String, ArrayList<Item>> entry : itemMap.entrySet()) {
-                    String message = entry.getKey();
-                    ArrayList<Item> items = entry.getValue();
-
-                    System.out.println("Message: " + message);
-                    for (Item item : items) {
-                        System.out.println("Item: " + item); // You might want to customize the toString() method in Item
-                    }
-                }
 
                 
 
