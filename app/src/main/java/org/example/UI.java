@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.example.object.Sword;
+import org.example.object.Weapon;
 
 public class UI {
     GamePanel gp;
@@ -23,13 +23,13 @@ public class UI {
     Graphics2D g2;
     public int slotCol = 0;
     public int slotRow = 0;
+    public int commandNum =0;
     public UI(GamePanel gp, InputHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
         getUIImage();
         arial_40 = new Font("Arial", Font.PLAIN, 40);
-        Sword sword = new Sword(gp);
-        swordImage = sword.image;
+        
         this.uiY = gp.screenWidth-250;
         
     }
@@ -48,6 +48,10 @@ public class UI {
         int frameY = gp.screenHeight/2;
         int frameWidth = gp.screenWidth/3;
         int frameHeight = gp.tileSize*5;
+        //Title Screen
+        if(gp.gameState == gp.titleState){
+            drawTitleScreen();
+        }
         if(keyH.tabPressed){
             //g2.drawImage(uiBox, 0,gp.screenWidth-250, gp.tileSize*10 , gp.tileSize*5, null);
             //g2.drawImage(swordImage,gp.tileSize/2, gp.screenWidth-230, gp.tileSize, gp.tileSize, null);
@@ -104,5 +108,39 @@ public class UI {
         g2.fillRoundRect(x, y, width, height, 35, 35);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+    }
+    public void drawTitleScreen(){
+        //Name
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "Peppa Farm";
+        //function to find centre for the text
+        int x = getXforCenterScreen(text);
+        int y = gp.tileSize*3;
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+        //-------MENU-----//
+        //--NEW GAME--//
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        text = "NEW GAME";
+        y += gp.tileSize*4; 
+        g2.drawString(text, x, y);
+        if(commandNum == 0){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        text = "Exit";
+        y += gp.tileSize*6; 
+        g2.drawString(text, x, y);
+        if(commandNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+
+
+    }
+    public int getXforCenterScreen(String text){
+        int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        int x = gp.screenWidth/2 -length/2;
+        return x;
     }
 }

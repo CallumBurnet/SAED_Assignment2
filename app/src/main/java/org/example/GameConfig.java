@@ -10,7 +10,7 @@ public class GameConfig {
     private int[] start;
     private int[] goal;
     private Map<String, ArrayList<int[]>> obstacles = new HashMap<>();
-    Map<String, ArrayList<Item>> itemMap = new HashMap();
+    private ArrayList<Item> itemList = new ArrayList<>();
     ArrayList<String> plugins = new ArrayList<>();
     ArrayList<String> scripts = new ArrayList<>();
 
@@ -30,16 +30,17 @@ public class GameConfig {
     }
     public Map<String, ArrayList<int[]>> getObstacles() { return obstacles; }
 
-    public void setItem(Map<String, ArrayList<Item>> itemMap) {
-        this.itemMap = itemMap;
-    }
+    
     public void addPlugin(String plugin){
         plugins.add(plugin);
     }
     public void addScript(String script){
         scripts.add(script);
     }
-    public Map<String, ArrayList<Item>> getItems() { return itemMap; }
+    public void addItem(Item item){
+        itemList.add(item);
+    }
+    public ArrayList<Item> getItems() { return itemList; }
 }
 
 

@@ -10,9 +10,9 @@ import javax.swing.JPanel;
 
 import org.example.entity.Entity;
 import org.example.entity.Player;
-import org.example.plugin.GamePlugin;
-import org.example.plugin.PluginLoader;
-import org.example.plugin.SimpleGameAPI;
+import org.example.gameplugins.GamePlugin;
+import org.example.gameplugins.PluginLoader;
+import org.example.gameplugins.SimpleGameAPI;
 import org.example.tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -41,17 +41,27 @@ public class GamePanel extends JPanel implements Runnable{
     public Entity obj[];
     public ArrayList<Entity> entityList = new ArrayList<>();
     public List<GamePlugin> plugins;
+    //GameState implementation
+    public int gameState;
+    public static int playState = 1;
+    public static int pauseState =2;
+    public static int titleState = 0;
+    public GamePanel(GameConfig config){
+        //----Getting the config----//
+        int[] size = config.getSize();
+        int[] start = config.getStart();
 
-    public GamePanel(int xSize, int ySize, int playerX, int playerY){
-        this.maxScreenCol = xSize;
-        this.maxScreenRow = ySize;
+        this.maxScreenCol = size[0];
+        this.maxScreenRow = size[1];
         this.screenHeight = tileSize * maxScreenRow;
         this.screenWidth = tileSize * maxScreenCol; //768
-        this.playerX = playerX * tileSize;
-        this.playerY = playerY * tileSize;
+        this.playerX = start[0] * tileSize;
+        this.playerY = start[1] * tileSize;
+        obj = new Entity[10]; //10 slots
+
         tileManager = new TileManager(this);
         cDetector = new CollisionDetector(this);
-        assetSetter = new AssetSetter(this);
+        assetSetter = new AssetSetter(this, config);
         ui = new UI(this, keyH);
 
         player = new Player(this, keyH, this.playerX, this.playerY);
@@ -64,8 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
             plugin.printRetard();
         }
 
-        obj = new Entity[10]; //10 slots
-
+        List<Item> items = config.getItems();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -74,7 +83,9 @@ public class GamePanel extends JPanel implements Runnable{
         
     }
     public void setUpGame(){
+        
         assetSetter.setObject();
+        gameState = titleState;
     }
     public void startGameThread(){
         gameThread = new Thread(this);
@@ -109,31 +120,43 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
     public void update(){
-        player.update();
+        if(gameState == playState){
+            player.update();
+
+        }if(gameState == pauseState){
+
+        }
     }
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g; //change graphics to 2d more functions
-        //tile
-        tileManager.draw(g2);
-        //object
-        entityList.add(player);
+        if(gameState == titleState){
+            ui.draw(g2);
+        }else{
+            //tile
+            tileManager.draw(g2);
+            //object
+            entityList.add(player);
 
-        for(int i = 0; i < obj.length; i++){
-            if(obj[i]!= null){
-                entityList.add(obj[i]);
+            for(int i = 0; i < obj.length; i++){
+                if(obj[i]!= null){
+                    entityList.add(obj[i]);
 
+                }
             }
+
+            for(int i = 0; i < entityList.size(); i++){
+                entityList.get(i).draw(g2);
+            }
+            for(int i = 0; i < entityList.size(); i++){
+                entityList.remove(i);
+            }
+            ui.draw(g2);
+            g2.dispose(); //mem saver
         }
 
-        for(int i = 0; i < entityList.size(); i++){
-            entityList.get(i).draw(g2);
-        }
-        for(int i = 0; i < entityList.size(); i++){
-            entityList.remove(i);
-        }
-        ui.draw(g2);
-        g2.dispose(); //mem saver
+        
+        
     }
 }

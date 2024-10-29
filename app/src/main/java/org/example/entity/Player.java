@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import org.example.GamePanel;
 import org.example.InputHandler;
 import org.example.UtilTool;
-import org.example.object.Sword;
+import org.example.object.Weapon;
 
 import com.google.common.escape.ArrayBasedCharEscaper;
 

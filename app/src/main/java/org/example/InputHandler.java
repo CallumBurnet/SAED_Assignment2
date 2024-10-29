@@ -18,33 +18,66 @@ public class InputHandler implements KeyListener{
     public void keyPressed(KeyEvent e) {
 
         int code = e.getKeyCode();
-        if(tabPressed == true){
-            menuManager(code);
-        }else{
+        if(gp.gameState == gp.titleState){
             if(code == KeyEvent.VK_W){
-                upPressed = true;
+                gp.ui.commandNum --;
+                if(gp.ui.commandNum < 0){
+                    gp.ui.commandNum = 1;
+                }
             }
             if(code == KeyEvent.VK_S){
-                downPressed = true;
+                gp.ui.commandNum ++;
+                if(gp.ui.commandNum > 1){
+                    gp.ui.commandNum = 0;
+                }
+            }if(code == KeyEvent.VK_ENTER){
+                switch(gp.ui.commandNum){
+                    case 0:
+                        gp.gameState = gp.playState;
+                        break;
+                    case 1:
+                        System.exit(0);
+                        break;
+                }
             }
-    
-            if(code == KeyEvent.VK_A){
-                leftPressed = true;
-            }
-            if(code == KeyEvent.VK_D){
-                rightPressed = true;
-            }
-            
         }
-        if(code == KeyEvent.VK_X){
+        else{
             if(tabPressed == true){
-                tabPressed = false;
+                menuManager(code);
             }else{
-                tabPressed = true;
-                System.out.println("TABBY");
+                if(code == KeyEvent.VK_W){
+                    upPressed = true;
+                }
+                if(code == KeyEvent.VK_S){
+                    downPressed = true;
+                }
+        
+                if(code == KeyEvent.VK_A){
+                    leftPressed = true;
+                }
+                if(code == KeyEvent.VK_D){
+                    rightPressed = true;
+                }
+                if(code == KeyEvent.VK_P){
+                    if(gp.gameState == gp.playState){
+                        gp.gameState = gp.pauseState;
+                    }else if(gp.gameState == gp.pauseState){
+                        gp.gameState = gp.playState;
+                    }
+                }
+                
             }
-            
+            if(code == KeyEvent.VK_X){
+                if(tabPressed == true){
+                    tabPressed = false;
+                }else{
+                    tabPressed = true;
+                    System.out.println("TABBY");
+                }
+                
+            }
         }
+    
         
     }
     public void menuManager(int code){
