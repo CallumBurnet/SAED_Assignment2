@@ -3,6 +3,10 @@
  */
 package org.example;
 import javax.swing.JFrame;
+
+import org.example.plugin.GamePlugin;
+import org.example.plugin.PluginLoader;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;

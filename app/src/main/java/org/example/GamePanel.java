@@ -4,10 +4,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JPanel;
 
 import org.example.entity.Entity;
 import org.example.entity.Player;
+import org.example.plugin.GamePlugin;
+import org.example.plugin.PluginLoader;
+import org.example.plugin.SimpleGameAPI;
 import org.example.tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -35,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Player player;
     public Entity obj[];
     public ArrayList<Entity> entityList = new ArrayList<>();
+    public List<GamePlugin> plugins;
 
     public GamePanel(int xSize, int ySize, int playerX, int playerY){
         this.maxScreenCol = xSize;
@@ -49,6 +55,15 @@ public class GamePanel extends JPanel implements Runnable{
         ui = new UI(this, keyH);
 
         player = new Player(this, keyH, this.playerX, this.playerY);
+        SimpleGameAPI gameAPI = new SimpleGameAPI(player);
+        PluginLoader pluginLoader = new PluginLoader();
+
+        pluginLoader.loadPlugin("org.example.plugin.PrintPlugin", gameAPI);
+        plugins =  pluginLoader.getPlugins();
+        for(GamePlugin plugin : plugins){
+            plugin.printRetard();
+        }
+
         obj = new Entity[10]; //10 slots
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));

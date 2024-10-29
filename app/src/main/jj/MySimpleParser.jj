@@ -208,25 +208,35 @@ void pluginConfig(GameConfig config) :
 
 void scriptConfig(GameConfig config) :
 {
-    Token scriptLine;
     StringBuilder scriptContent = new StringBuilder();
 }
 {
-    <SCRIPT> <EXCLAMATION> <BRACE_OPEN> 
-    (
-        scriptLine=<STRING_LITERAL>  // Match each line within the script block
-        {
-            scriptContent.append(scriptLine.image).append("\n");
-        }
-    )*
-    <BRACE_CLOSE>
+    <SCRIPT> <EXCLAMATION> <BRACE_OPEN>
     {
-        // Remove surrounding quotes and trim the script content
+        // Capture everything as free text until we reach the closing brace
+        while (true) {
+            Token currentToken = getNextToken();
+
+            // Stop on the closing brace
+            if (currentToken.kind == BRACE_CLOSE) {
+                break;
+            }
+
+            // Append each token’s image as part of the script content
+            scriptContent.append(currentToken.image);
+        }
+    }
+    {
+        // Add the captured script content to GameConfig and print it
         String fullScript = scriptContent.toString().trim();
         config.addScript(fullScript);
         System.out.println("Parsed script content:\n" + fullScript);
     }
 }
+
+
+
+
 
 
 
