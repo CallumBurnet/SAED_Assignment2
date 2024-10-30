@@ -3,18 +3,22 @@ start (4,3)
 goal (9,0)
 plugin tNjr.FgnN.SrUDq.XP.udAa
 item "antique whit dagger" {
-  at (1,0), (3,2)
+  at (1,6), (8,2)
   message "[mLIzA"
 }
 plugin tNjr.FgnN.SrUDq.XP.udAa
 
-item "antique whsit dagger" {
+item "white dagger" {
   at (1,2)
   message "[mLIzA"
 }
 obstacle {
-  at (2,0)
-  requires "antique white dagger"
+  at (2,4),(3,7)
+  requires "white dagger"
+}
+obstacle {
+  at (5,3)
+  requires "white dagger"
 }
 
 

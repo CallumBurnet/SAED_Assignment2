@@ -19,7 +19,7 @@ public class Weapon extends Entity{
                 down1 = setup("/objects/diamondsword");  
                 break;
             case "dagger":
-                down1 = setup("/objects/diamondsword");
+                down1 = setup("/objects/copperDagger");
                 break;
             case "axe":
                 down1 = setup("/objects/diamondsword");

@@ -1,5 +1,6 @@
 package org.example.gameplugins;
 
 public interface GamePlugin {
-   void printRetard();
+    void initialize(GameAPI gameAPI);
+    void execute();
 }

@@ -10,9 +10,11 @@ import javax.swing.JPanel;
 
 import org.example.entity.Entity;
 import org.example.entity.Player;
+import org.example.environment.EnvironmentManager;
 import org.example.gameplugins.GamePlugin;
 import org.example.gameplugins.PluginLoader;
 import org.example.gameplugins.SimpleGameAPI;
+import org.example.object.Obstacle;
 import org.example.tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -21,13 +23,14 @@ public class GamePanel extends JPanel implements Runnable{
     public int scale = 3; // makes it 48 x 48 it scales
     public int tileSize = originalTileSize * scale;
     public int maxScreenCol = 10;
-    public int maxScreenRow = 20;
+    public int maxScreenRow = 10;
     public int screenWidth = tileSize * maxScreenCol; //768
     public int screenHeight= tileSize * maxScreenRow; //576
     //FPS
     int FPS = 60;
     TileManager tileManager;
-    InputHandler keyH = new InputHandler(this);
+    public InputHandler keyH = new InputHandler(this);
+    //EnvironmentManager environmentManager = new EnvironmentManager(this);
     Thread gameThread;
     public CollisionDetector cDetector;// = new CollisionDetector(this);
     public AssetSetter assetSetter;// = new AssetSetter(this);
@@ -38,7 +41,9 @@ public class GamePanel extends JPanel implements Runnable{
     int playerY;
     int playerSpeed = 4;
     public Player player;
-    public Entity obj[];
+    public Entity obj[] = new Entity[20]; //10 slots
+    public Entity npc[] = new Entity[10];
+    public Obstacle obstacles[] = new Obstacle[10];
     public ArrayList<Entity> entityList = new ArrayList<>();
     public List<GamePlugin> plugins;
     //GameState implementation
@@ -46,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
     public static int playState = 1;
     public static int pauseState =2;
     public static int titleState = 0;
+    public static int dialogueState = 3;
     public GamePanel(GameConfig config){
         //----Getting the config----//
         int[] size = config.getSize();
@@ -57,7 +63,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.screenWidth = tileSize * maxScreenCol; //768
         this.playerX = start[0] * tileSize;
         this.playerY = start[1] * tileSize;
-        obj = new Entity[10]; //10 slots
 
         tileManager = new TileManager(this);
         cDetector = new CollisionDetector(this);
@@ -68,10 +73,10 @@ public class GamePanel extends JPanel implements Runnable{
         SimpleGameAPI gameAPI = new SimpleGameAPI(player);
         PluginLoader pluginLoader = new PluginLoader();
 
-        pluginLoader.loadPlugin("org.example.plugin.PrintPlugin", gameAPI);
+        pluginLoader.loadPlugin("org.example.gameplugins.PrintPlugin", gameAPI);
         plugins =  pluginLoader.getPlugins();
         for(GamePlugin plugin : plugins){
-            plugin.printRetard();
+            plugin.execute();
         }
 
         List<Item> items = config.getItems();
@@ -85,10 +90,14 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame(){
         
         assetSetter.setObject();
+        assetSetter.setNPC();
+        assetSetter.setObstacles();
         gameState = titleState;
+        
     }
     public void startGameThread(){
         gameThread = new Thread(this);
+        //environmentManager.setup();
         gameThread.start();
     }
     @Override //THE GAME LOOP IS HERE
@@ -113,6 +122,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
             if(timer >= 1000000000){
                 System.out.println("FPS:" + drawCount);
+                System.out.println("Game State " + this.gameState);
                 drawCount =0;
                 timer = 0;
             }
@@ -122,6 +132,11 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         if(gameState == playState){
             player.update();
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].update();
+                }
+            }
 
         }if(gameState == pauseState){
 
@@ -134,6 +149,7 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState == titleState){
             ui.draw(g2);
         }else{
+
             //tile
             tileManager.draw(g2);
             //object
@@ -142,7 +158,19 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i < obj.length; i++){
                 if(obj[i]!= null){
                     entityList.add(obj[i]);
-
+    
+                }
+            }
+            for(int i = 0; i < obstacles.length; i++){
+                if(obstacles[i]!= null){
+                    entityList.add(obstacles[i]);
+    
+                }
+            }
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i]!= null){
+                    entityList.add(npc[i]);
+    
                 }
             }
 
@@ -152,6 +180,7 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i < entityList.size(); i++){
                 entityList.remove(i);
             }
+            //environmentManager.draw(g2);
             ui.draw(g2);
             g2.dispose(); //mem saver
         }

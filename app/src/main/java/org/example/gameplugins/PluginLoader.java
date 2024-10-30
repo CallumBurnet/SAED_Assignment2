@@ -9,7 +9,8 @@ public class PluginLoader {
     public void loadPlugin(String className, GameAPI gameAPI) {
         try {
             Class<?> pluginClass = Class.forName(className);
-            GamePlugin plugin = (GamePlugin) pluginClass.getDeclaredConstructor(GameAPI.class).newInstance(gameAPI);
+            GamePlugin plugin = (GamePlugin) pluginClass.getDeclaredConstructor().newInstance();
+            plugin.initialize(gameAPI); // Initialize the plugin with GameAPI
             plugins.add(plugin);
             System.out.println("Loaded plugin: " + className);
         } catch (Exception e) {

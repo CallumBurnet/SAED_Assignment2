@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.example.object.Obstacle;
+
 public class GameConfig {
     private int[] size;
     private int[] start;
@@ -26,7 +28,9 @@ public class GameConfig {
     public int[] getGoal() { return goal; }
 
     public void addObstacle(String name, ArrayList<int[]> coords) {
+        System.out.println("ADDED : " + name);
         obstacles.put(name,coords);
+
     }
     public Map<String, ArrayList<int[]>> getObstacles() { return obstacles; }
 

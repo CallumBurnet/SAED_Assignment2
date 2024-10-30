@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class InputHandler implements KeyListener{
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, tabPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, tabPressed, enterPressed;
     public InputHandler(GamePanel gp){
         this.gp = gp;
     }
@@ -41,7 +41,7 @@ public class InputHandler implements KeyListener{
                 }
             }
         }
-        else{
+        else if(gp.gameState == gp.playState){
             if(tabPressed == true){
                 menuManager(code);
             }else{
@@ -57,6 +57,8 @@ public class InputHandler implements KeyListener{
                 }
                 if(code == KeyEvent.VK_D){
                     rightPressed = true;
+                }if(code == KeyEvent.VK_ENTER){
+                    enterPressed = true;
                 }
                 if(code == KeyEvent.VK_P){
                     if(gp.gameState == gp.playState){
@@ -76,9 +78,11 @@ public class InputHandler implements KeyListener{
                 }
                 
             }
+        }else if(gp.gameState == gp.dialogueState){
+            if(code == KeyEvent.VK_ENTER){
+                gp.gameState = gp.playState;
+            }
         }
-    
-        
     }
     public void menuManager(int code){
         

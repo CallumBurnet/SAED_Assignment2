@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.example.GamePanel;
 import org.example.InputHandler;
 import org.example.UtilTool;
+import org.example.object.Armor;
 import org.example.object.Weapon;
 
 import com.google.common.escape.ArrayBasedCharEscaper;
@@ -26,7 +27,6 @@ public class Player extends Entity {
         
         x = playerX;
         y = playerY;
-        System.out.println("Player x " + x + y);
         solidArea = new Rectangle(8,16,32,32);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
@@ -41,34 +41,24 @@ public class Player extends Entity {
     }
     public void getPlayerImage(){
        
-            up1 = setup("boy_up_1");
-            left1 = setup("boy_left_1");
+            up1 = setup("/player/up1");
+            left1 = setup("/player/left1");
 
-            right1 = setup("boy_right_1");
+            right1 = setup("/player/right1");
 
-            up2 = setup("boy_up_2");
+            up2 = setup("/player/up2");
 
-            down1 = setup("boy_down_1");
+            down1 = setup("/player/down1");
 
-            down2 = setup("boy_down_2");
+            down2 = setup("/player/down2");
 
-            left2 = setup("boy_left_2");
-            right2 = setup("boy_right_2");
+            left2 = setup("/player/left2");
+            right2 = setup("/player/right2");
 
         
     }
 
-    public BufferedImage setup(String imageName){
-        UtilTool uTool = new UtilTool();
-        BufferedImage scaledImage = null;
-        try{
-            scaledImage = ImageIO.read(getClass().getResourceAsStream("/player/" +imageName+".png"));
-            scaledImage = uTool.scaledImage(scaledImage, gp.tileSize, gp.tileSize);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        return scaledImage;
-    }
+   
     public void update(){
         if(keyH.upPressed ||keyH.downPressed || keyH.leftPressed||keyH.rightPressed){
             if(keyH.upPressed){
@@ -93,8 +83,12 @@ public class Player extends Entity {
             gp.cDetector.checkTile(this);
             //Check object collision
             int objIndex = gp.cDetector.checkObject(this, true);
-            
             pickUpItem(objIndex);
+            //Check npc obstacle collision
+            int npcIndex = gp.cDetector.checkEntity(this, gp.npc);
+            interact(npcIndex, "npc");
+            int obsIndex = gp.cDetector.checkEntity(this, gp.obstacles);
+            interact(obsIndex, "obstacle");
 
             //If collision false
             if(collisionOn == false){
@@ -127,52 +121,7 @@ public class Player extends Entity {
         }
        
     }
-    public void draw(Graphics2D g2){
-        BufferedImage image = null;
-        switch(direction){
-            case "up":
-                if(spriteNum == 1){
-                    image = up1;
-
-                }
-                if(spriteNum == 2){
-                    image = up2;
-
-                }
-                break;
-            case "down":
-                 if(spriteNum == 1){
-                    image = down1;
-
-                }
-                if(spriteNum == 2){
-                    image = down2;
-
-                }
-                break;
-            case "left":
-                if(spriteNum == 1){
-                    image = left1;
-
-                }
-                if(spriteNum == 2){
-                    image = left2;
-
-                }
-                break;
-            case "right":
-                if(spriteNum == 1){
-                    image = right1;
-
-                }
-                if(spriteNum == 2){
-                    image = right2;
-
-                }
-                break;
-        }
-        g2.drawImage(image, x,y, gp.tileSize, gp.tileSize, null);
-    }
+    
     public void pickUpItem(int i){
         if(i != 999 && collisionOn == false){ //999 means we didnt pick up[ anythign]
             inventory.add(gp.obj[i]);
@@ -180,4 +129,45 @@ public class Player extends Entity {
 
         }
     }
+    public void interact(int i, String nature){
+        if(i != 999 ){ //999 means we didnt pick up[ anythign]
+            if(gp.keyH.enterPressed == true){
+                if(nature.equals("npc")){
+                    gp.gameState = gp.dialogueState;
+                    gp.npc[i].displayDialogue();
+                }else if(nature.equals("obstacle")){
+                    if(hasItem(i)){
+                        gp.obstacles[i] = null;
+
+                    }else{
+                        gp.gameState = gp.dialogueState;
+                        gp.obstacles[i].displayDialogue();
+                    }
+                }
+            }
+            gp.keyH.enterPressed = false;
+
+        }
+    }
+    public boolean hasItem(int i) {
+    for (Entity entity : inventory) {
+        if(entity.name.equals(gp.obstacles[i].requiredItem())){
+            System.out.println("MATCHING ");
+            return true;
+        }
+    }
+    return false; // Return false if no matching item is found
+    }
+    public int[] getPosition() {
+        // Example of initializing an array with two coordinates (e.g., x and y positions)
+        int[] array = new int[] {x, y}; // Replace 0, 0 with actual values or variables
+        return array;
+    }
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    
+
+    
 }

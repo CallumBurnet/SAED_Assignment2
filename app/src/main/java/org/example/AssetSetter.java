@@ -1,19 +1,29 @@
 package org.example;
 
 import java.util.List;
-
+import java.util.Map;
 import org.checkerframework.checker.units.qual.s;
+import org.example.entity.Entity;
+import org.example.entity.TrappedGuy;
+import org.example.object.Obstacle;
 import org.example.object.Weapon;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AssetSetter {
+    Map<String, ArrayList<int[]>> obstacles;
     GamePanel gp;
     GameConfig cfg;
     List<Item> items;
     int itemCounter = 0;
+    public Entity preOb[] = new Entity[10];
+
+
     public AssetSetter(GamePanel gp, GameConfig cfg){
         this.gp = gp;
         this.cfg = cfg;
         this.items = cfg.getItems();
+        this.obstacles = cfg.getObstacles();
 
     }
     public void setObject(){
@@ -23,6 +33,16 @@ public class AssetSetter {
         gp.obj[0].y =  6 *gp.tileSize;
         itemCounter ++;
         setItemToEntity();
+    }
+    public void setObstacles(){
+        setObstacleToEntity();
+    }
+    public void setNPC(){
+        gp.npc[0] = new TrappedGuy(gp);
+        gp.npc[0].x = gp.tileSize*10;
+        gp.npc[0].y = gp.tileSize*10;
+
+
     }
     public void setItemToEntity() {
         // Assuming `items` is a list of parsed items with names
@@ -43,6 +63,30 @@ public class AssetSetter {
                 System.out.println("HALLLT UNHANDLED");
             }
         }
+    }
+    public void setObstacleToEntity() {
+        // Assuming `items` is a list of parsed items with names
+        int i = 0;
+        
+        for (Map.Entry<String, ArrayList<int[]>> entry : obstacles.entrySet()) {
+            String requiredItem = entry.getKey();
+            ArrayList<int[]> coordinatesList = entry.getValue();
+
+            
+            System.out.println("Obstacle Type: " + requiredItem);
+            
+            for (int[] coordinates : coordinatesList) {
+                System.out.println("Showing: " +i);
+                gp.obstacles[i] = new Obstacle(gp, requiredItem);
+                gp.obstacles[i].x = coordinates[0] * gp.tileSize;
+                gp.obstacles[i].y = coordinates[1] * gp.tileSize;
+                i ++;
+               
+            }
+            System.out.println(); // Line break between different obstacle types
+        }
+        
+       
     }
     
     private boolean isWeapon(String name) {
