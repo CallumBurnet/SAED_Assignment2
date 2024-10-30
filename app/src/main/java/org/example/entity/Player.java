@@ -131,12 +131,13 @@ public class Player extends Entity {
     }
     public void interact(int i, String nature){
         if(i != 999 ){ //999 means we didnt pick up[ anythign]
-            if(gp.keyH.enterPressed == true){
-                if(nature.equals("npc")){
+           
+                if(nature.equals("npc") && gp.keyH.enterPressed == true){
                     gp.gameState = gp.dialogueState;
                     gp.npc[i].displayDialogue();
                 }else if(nature.equals("obstacle")){
-                    if(hasItem(i)){
+                    System.out.println(gp.obstacles[i].unlocked == true);
+                    if(hasItem(i) || gp.obstacles[i].unlocked == true){
                         gp.obstacles[i] = null;
 
                     }else{
@@ -148,7 +149,7 @@ public class Player extends Entity {
             gp.keyH.enterPressed = false;
 
         }
-    }
+    
     public boolean hasItem(int i) {
     for (Entity entity : inventory) {
         if(entity.name.equals(gp.obstacles[i].requiredItem())){
@@ -166,6 +167,9 @@ public class Player extends Entity {
     public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
+    }
+    public GamePanel getGamePanel(){
+        return gp;
     }
     
 

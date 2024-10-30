@@ -1,12 +1,11 @@
 size (20,20)
 start (4,3)
 goal (9,0)
-plugin tNjr.FgnN.SrUDq.XP.udAa
 item "antique whit dagger" {
   at (1,6), (8,2)
   message "[mLIzA"
 }
-plugin tNjr.FgnN.SrUDq.XP.udAa
+plugin org.example.plugins.Penalty
 
 item "white dagger" {
   at (1,2)

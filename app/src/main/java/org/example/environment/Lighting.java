@@ -24,7 +24,7 @@ public class Lighting {
 
 
     }
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, String mode) {
         // Reset the darkness filter
         this.darknessFilter = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D gFilter = (Graphics2D) darknessFilter.getGraphics();

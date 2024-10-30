@@ -1,4 +1,4 @@
-package org.example.gameplugins;
+package org.example.pluginengine;
 
 import org.example.Item;
 import org.example.entity.*;
@@ -13,9 +13,13 @@ public interface GameAPI {
     int[] getPlayerLocation();
 
     Entity[] getInventory();
-    void addItem(Entity item);  // Accepts an item to add
-    void removeItem(Entity item); // Accepts an item to remove
+    void addItem(String name, String description, String itemImage);  // Accepts an item to add
+    void removeItem(String itemName); // Accepts an item to remove
 
     int getGridSize();
     void visibility(boolean visible);
+    void registerMenuOption(String optionName, Runnable action);
+
+    void createTimedObstacle(String name, int time);
+
 }

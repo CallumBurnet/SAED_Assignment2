@@ -47,6 +47,13 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'tester']
+        }
+    }
+}
 
 application {
     // Define the main class for the application.

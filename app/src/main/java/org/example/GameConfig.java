@@ -38,6 +38,9 @@ public class GameConfig {
     public void addPlugin(String plugin){
         plugins.add(plugin);
     }
+    public ArrayList<String> getPlugins(){
+        return plugins;
+    }
     public void addScript(String script){
         scripts.add(script);
     }

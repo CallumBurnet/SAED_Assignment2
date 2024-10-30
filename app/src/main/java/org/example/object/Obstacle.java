@@ -5,18 +5,27 @@ import org.example.entity.Entity;
 
 public class Obstacle extends Entity{
     String requires;
-    public Obstacle(GamePanel gp, String requires){
+    public Boolean unlocked;
+    public int timer;
+    public boolean timed;
+    public Obstacle(GamePanel gp, String requires,Boolean timed, int time){
             super(gp);
             collision = true;
             this.requires = requires;
+            this.timed = timed;
+            this.timer = time;
             down1 = setup("/objects/diamondsword");  
             setDialogue();
-            System.out.println("HERE");
             
     }
     public void setDialogue(){
         String requireString = requires.replace("\"", "");
-
+        if(requires == ""){
+            unlocked = true;
+            System.out.println("Unlocked: " + unlocked);
+        }else{
+            unlocked = false;
+        }
         dialogue[0] = "Need a " + requireString ;
     }
     public void displayDialogue(){
@@ -24,6 +33,13 @@ public class Obstacle extends Entity{
     }
     public String requiredItem(){
         return requires;
+    }
+    public int getTimer(){
+        System.out.println("TIMER" + timer);
+        return timer;
+    }
+    public void decreaseTimer(){
+        timer--;
     }
     
     

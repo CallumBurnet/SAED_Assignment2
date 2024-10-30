@@ -4,7 +4,7 @@
 package org.example;
 import javax.swing.JFrame;
 
-import org.example.gameplugins.*;
+import org.example.pluginengine.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

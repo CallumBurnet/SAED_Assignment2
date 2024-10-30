@@ -1,4 +1,4 @@
-package org.example.gameplugins;
+package org.example.pluginengine;
 
 import java.util.ArrayList;
 import java.util.List;

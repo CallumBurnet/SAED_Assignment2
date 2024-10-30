@@ -37,6 +37,17 @@ public class AssetSetter {
     public void setObstacles(){
         setObstacleToEntity();
     }
+    public void setTimedObstacle(String name, int time){
+        for(int i  = 0; i <= gp.obstacles.length; i++){
+            System.out.println("FOUND A SLOT" + i);
+        }
+            
+        System.out.println("NEW OBJ");
+        gp.obstacles[9] = new Obstacle(gp,"", true, time);
+        gp.obstacles[9].x = 8 * gp.tileSize;
+        gp.obstacles[9].y = 10 * gp.tileSize;
+   
+    }
     public void setNPC(){
         gp.npc[0] = new TrappedGuy(gp);
         gp.npc[0].x = gp.tileSize*10;
@@ -44,6 +55,7 @@ public class AssetSetter {
 
 
     }
+    
     public void setItemToEntity() {
         // Assuming `items` is a list of parsed items with names
         for (Item item : items) {
@@ -77,7 +89,7 @@ public class AssetSetter {
             
             for (int[] coordinates : coordinatesList) {
                 System.out.println("Showing: " +i);
-                gp.obstacles[i] = new Obstacle(gp, requiredItem);
+                gp.obstacles[i] = new Obstacle(gp, requiredItem,false, 0);
                 gp.obstacles[i].x = coordinates[0] * gp.tileSize;
                 gp.obstacles[i].y = coordinates[1] * gp.tileSize;
                 i ++;
@@ -85,7 +97,9 @@ public class AssetSetter {
             }
             System.out.println(); // Line break between different obstacle types
         }
-        
+     
+
+    
        
     }
     
@@ -119,6 +133,13 @@ public class AssetSetter {
     }
     private void makeJewelry(Item item){
 
+    }
+    public void remove(String name, int index){
+        switch(name){
+            case "obstacle":
+                gp.obstacles[index] = null;
+
+        }
     }
     
 

@@ -11,10 +11,10 @@ import javax.swing.JPanel;
 import org.example.entity.Entity;
 import org.example.entity.Player;
 import org.example.environment.EnvironmentManager;
-import org.example.gameplugins.GamePlugin;
-import org.example.gameplugins.PluginLoader;
-import org.example.gameplugins.SimpleGameAPI;
 import org.example.object.Obstacle;
+import org.example.pluginengine.GamePlugin;
+import org.example.pluginengine.PluginLoader;
+import org.example.pluginengine.SimpleGameAPI;
 import org.example.tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -33,7 +33,6 @@ public class GamePanel extends JPanel implements Runnable{
     //EnvironmentManager environmentManager = new EnvironmentManager(this);
     Thread gameThread;
     public CollisionDetector cDetector;// = new CollisionDetector(this);
-    public AssetSetter assetSetter;// = new AssetSetter(this);
     public UI ui;// = new UI(this, keyH);
     //PLAYER
     //default player pos
@@ -52,6 +51,9 @@ public class GamePanel extends JPanel implements Runnable{
     public static int pauseState =2;
     public static int titleState = 0;
     public static int dialogueState = 3;
+    public static int deathState = 4;
+    public int obstacleTimer = 0;
+    public AssetSetter assetSetter;
     public GamePanel(GameConfig config){
         //----Getting the config----//
         int[] size = config.getSize();
@@ -66,18 +68,27 @@ public class GamePanel extends JPanel implements Runnable{
 
         tileManager = new TileManager(this);
         cDetector = new CollisionDetector(this);
-        assetSetter = new AssetSetter(this, config);
+        this.assetSetter = new AssetSetter(this, config);
         ui = new UI(this, keyH);
 
         player = new Player(this, keyH, this.playerX, this.playerY);
         SimpleGameAPI gameAPI = new SimpleGameAPI(player);
         PluginLoader pluginLoader = new PluginLoader();
+        ArrayList<String> pluginsToLoad = config.getPlugins();
+        for(int i = 0; i < pluginsToLoad.size(); i++){
+            if(pluginsToLoad.get(i) != null){
+                System.out.println("LOADING");
+                pluginLoader.loadPlugin(pluginsToLoad.get(i), gameAPI);
 
-        pluginLoader.loadPlugin("org.example.gameplugins.PrintPlugin", gameAPI);
+            }
+
+        }
         plugins =  pluginLoader.getPlugins();
         for(GamePlugin plugin : plugins){
             plugin.execute();
         }
+        gameAPI.onMenuOptionSelected(); // Executes the teleport action
+
 
         List<Item> items = config.getItems();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -85,7 +96,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        
     }
     public void setUpGame(){
         
@@ -158,12 +168,30 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i < obj.length; i++){
                 if(obj[i]!= null){
                     entityList.add(obj[i]);
-    
+                
                 }
             }
+            obstacleTimer ++;
+            //System.out.println(obstacleTimer);
             for(int i = 0; i < obstacles.length; i++){
                 if(obstacles[i]!= null){
-                    entityList.add(obstacles[i]);
+                    
+                    if(obstacleTimer % 60 == 0 && obstacles[i].timed == true){
+                        obstacles[i].decreaseTimer();
+                        if(obstacles[i].getTimer()<=0){
+                            gameState = deathState;
+                            System.out.println("REMOVING");
+                            obstacles[i] = null;
+                            obstacleTimer = 0;
+
+                        }else{
+                            entityList.add(obstacles[i]);
+
+                        }
+                    }else{
+                        entityList.add(obstacles[i]);
+
+                    }
     
                 }
             }
@@ -172,7 +200,8 @@ public class GamePanel extends JPanel implements Runnable{
                     entityList.add(npc[i]);
     
                 }
-            }
+            }        
+
 
             for(int i = 0; i < entityList.size(); i++){
                 entityList.get(i).draw(g2);

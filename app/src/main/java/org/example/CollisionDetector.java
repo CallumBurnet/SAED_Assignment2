@@ -171,6 +171,7 @@ public class CollisionDetector {
                     case "right":
                         entity.solidArea.x += entity.speed;
                         if(entity.solidArea.intersects(target[i].solidArea)){
+
                             entity.collisionOn = true;
                             index = i;
 

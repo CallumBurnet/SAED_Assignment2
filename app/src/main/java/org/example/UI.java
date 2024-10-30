@@ -102,6 +102,8 @@ public class UI {
         }else if(gp.gameState == gp.dialogueState){
             
             drawDialogueScreen();
+        }else if(gp.gameState == gp.deathState){
+            drawDeathScreen();
         }
         
         
@@ -122,6 +124,32 @@ public class UI {
         //Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
         String text = "Peppa Farm";
+        //function to find centre for the text
+        int x = getXforCenterScreen(text);
+        int y = gp.tileSize*3;
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+        //-------MENU-----//
+        //--NEW GAME--//
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        text = "NEW GAME";
+        y += gp.tileSize*4; 
+        g2.drawString(text, x, y);
+        if(commandNum == 0){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        text = "Exit";
+        y += gp.tileSize*6; 
+        g2.drawString(text, x, y);
+        if(commandNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+    }
+    public void drawDeathScreen(){
+        //Name
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "You Died";
         //function to find centre for the text
         int x = getXforCenterScreen(text);
         int y = gp.tileSize*3;

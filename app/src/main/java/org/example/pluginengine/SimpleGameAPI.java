@@ -1,4 +1,4 @@
-package org.example.gameplugins;
+package org.example.pluginengine;
 
 import org.example.entity.Entity;
 import org.example.entity.Player;
@@ -23,7 +23,7 @@ public class SimpleGameAPI implements GameAPI {
 
     @Override
     public void onNewItemAcquired(Entity item) {
-        addItem(item);
+       // addItem(item);
         System.out.println("New item acquired: " + item);
     }
 
@@ -53,12 +53,12 @@ public class SimpleGameAPI implements GameAPI {
     }
 
     @Override
-    public void addItem(Entity item) {
-        inventory.add(item);
+    public void addItem(String name, String description, String itemImage) {
+        //inventory.add(item);
     }
 
     @Override
-    public void removeItem(Entity item) {
+    public void removeItem(String item) {
         inventory.remove(item);
     }
 
@@ -72,4 +72,16 @@ public class SimpleGameAPI implements GameAPI {
         this.gridVisible = visible;
         System.out.println("Grid visibility set to: " + visible);
     }
+
+    @Override
+    public void registerMenuOption(String optionName, Runnable action) {
+        player.getGamePanel().ui.drawSubWindow(gridSize, gridSize, gridSize, gridSize);
+    }
+    @Override
+    
+    public void createTimedObstacle(String name, int time){
+        player.getGamePanel().assetSetter.setTimedObstacle(name, time);
+
+    }
+
 }

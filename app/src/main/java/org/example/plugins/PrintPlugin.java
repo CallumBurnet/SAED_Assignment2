@@ -1,4 +1,7 @@
-package org.example.gameplugins;
+package org.example.plugins;
+
+import org.example.pluginengine.GameAPI;
+import org.example.pluginengine.GamePlugin;
 
 public class PrintPlugin implements GamePlugin {
     private GameAPI gameAPI;
