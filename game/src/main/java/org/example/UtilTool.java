@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Locale;
+
 public class UtilTool {
     public int[] size;
     public int[] start;
@@ -16,4 +18,11 @@ public class UtilTool {
         g2.dispose();
         return scaledImage;
     }
+    public void changeLocale(String languageTag) {
+        Locale locale = Locale.forLanguageTag(languageTag);
+        Locale.setDefault(locale);
+        // Call a method to update all UI text and formats based on the new locale
+
+    }
+
 }

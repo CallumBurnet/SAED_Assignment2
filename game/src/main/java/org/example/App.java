@@ -4,8 +4,6 @@
 package org.example;
 import javax.swing.JFrame;
 
-import org.example.pluginengine.*;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -26,15 +24,6 @@ public class App {
             try {
                 // Open the input file
                 InputStream inputFileStream = new FileInputStream(inputFilePath);
-                Map<String, ArrayList<int[]>> obstacleMap = new HashMap<>();
-                Map<String, ArrayList<int[]>> tempObMap = new HashMap<>();
-
-                Map<String, ArrayList<Item>> itemMap = new HashMap<>();
-                Map<String, ArrayList<Item>> tempItemMap = new HashMap<>();
-                ArrayList<String> plugins = new ArrayList<>();
-                ArrayList<String> scripts = new ArrayList<>();
-
-
                 // Pass the file input stream to the parser
                 MySimpleParser parser = new MySimpleParser(inputFileStream);
                 GameConfig config = parser.parseGameConfig();

@@ -1,0 +1,33 @@
+# bundle_ja_JP.properties
+#Menu
+game_name = ペッパ王国
+greeting = こんにちは
+farewell = さようなら
+welcome = ようこそ
+new_game = ゲーム開始
+pause_game = ゲームを一時停止
+exit_game = 終了
+died = 死にました
+choose_language = 言語を選択
+enter_language_tag = 有効なIETF言語タグを入力してください
+
+#Weapons
+ancient_white_dagger = 古代の白い短剣
+old_rusted_blade = 古びた錆びた刃
+wooden_axe = 木の斧
+melted_blade = 古代の白い刃
+diamond_sword = ダイヤモンドの剣
+
+#Items
+golden_chest = 黄金の宝箱
+teleporter = テレポーター
+
+#Descriptions
+use_carefully = 注意して使ってください
+tread_lightly = 注意して進んでください
+hold_lightly = 軽く持ってください
+
+#NPC dialogue
+its_been_so_long = こんなに長い間...
+since_ive_seen_a_face = 誰かの顔を見たのは
+its_so_dark = とても暗いです

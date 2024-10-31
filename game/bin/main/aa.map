@@ -1,23 +1,23 @@
 size (20,20)
 start (4,3)
-goal (9,0)
-item "antique whit dagger" {
+goal (9,5)
+item "dagger" {
   at (1,6), (8,2)
-  message "[mLIzA"
+  message "hold_lightly"
 }
-plugin org.example.plugins.Penalty
 
-item "white dagger" {
+item "diamond_sword" {
   at (1,2)
-  message "[mLIzA"
+  message "tread_lightly"
 }
 obstacle {
   at (2,4),(3,7)
-  requires "white dagger"
+  requires "dagger"
 }
 obstacle {
   at (5,3)
-  requires "white dagger"
+  requires "dagger"
 }
+
 
 

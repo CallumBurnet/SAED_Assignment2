@@ -32,8 +32,9 @@ public class TrappedGuy extends Entity{
     
     }   
     public void setDialogue(){
-        dialogue[0] = "Yo cuh";
-        dialogue[1] = "Stop harassing me";
+        dialogue[0] = "its_been_so_long";
+        dialogue[1] = "since_ive_seen_a_face";
+        dialogue[2] = "its_so_dark";
     }
     public void displayDialogue(){
         if(dialogue[dialogueIndex] == null){

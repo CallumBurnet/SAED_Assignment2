@@ -1,16 +1,22 @@
 package org.example;
 
+import org.engine.GamePlugin;
+
 public class Item {
     String name;
     int x, y;
     String message;
     String type;
+    public GamePlugin plugin;
 
-    public Item(String name, int x, int y, String message) {
+    public Item(String name, int x, int y, String message, GamePlugin plugin) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.message = message;
+        if(plugin != null) {
+            this.plugin = plugin;
+        }
     }
     public void setMessage(String message){
         this.message = message;

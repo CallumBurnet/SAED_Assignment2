@@ -26,7 +26,7 @@ public class Obstacle extends Entity{
         }else{
             unlocked = false;
         }
-        dialogue[0] = "Need a " + requireString ;
+        dialogue[0] = requireString ;
     }
     public void displayDialogue(){
         gp.ui.currentDialogue = dialogue[0];
@@ -35,7 +35,6 @@ public class Obstacle extends Entity{
         return requires;
     }
     public int getTimer(){
-        System.out.println("TIMER" + timer);
         return timer;
     }
     public void decreaseTimer(){

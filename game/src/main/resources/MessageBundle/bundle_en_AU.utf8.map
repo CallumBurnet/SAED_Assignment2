@@ -1,0 +1,35 @@
+# bundle_en_AU.properties
+#Menu
+game_name = Peppa Kingdom
+greeting = Hello
+farewell = See ya
+welcome = Welcome
+new_game = Start Game
+pause_game = Pause Game
+exit_game = Exit
+died = You Died
+choose_language = Choose a Language
+enter_language_tag = Enter a valid IETF language Tag
+#Weapons
+dagger = Ancient White Dagger
+old_rusted_blade = Old Rusted Blade
+wooden_axe = Wooden axe
+melted_blade = Ancient White Blade
+diamond_sword = Diamond Sword
+
+
+#Items
+golden_chest = Golden Chest
+teleporter = Teleporter
+
+#Descriptions
+use_carefully = Use Carefully
+tread_lightly = Tread with Caution
+hold_lightly = Hold Lightly
+
+#NPC dialogue
+its_been_so_long = Its been so long...
+since_ive_seen_a_face = Since i've seen a face
+its_so_dark = Its so dark
+
+

@@ -6,11 +6,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.entity.APIEntity;
 import org.example.GamePanel;
 import org.example.UtilTool;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class Entity {
+public class Entity implements APIEntity {
     public GamePanel gp;
     public int x, y;
     public int speed;
@@ -102,6 +104,57 @@ public class Entity {
        
        
     }
+
+    @Override
+    public int getX() {
+        return this.x;
+    }
+
+    @Override
+    public int getY() {
+        return this.y;
+    }
+
+    @Override
+    public int getSpeed() {
+        return this.speed;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String getDirection() {
+        return this.direction;
+    }
+
+    @Override
+    public boolean isCollisionOn() {
+        return this.collisionOn;
+    }
+
+    @Override
+    public Rectangle getSolidArea() {
+        return this.solidArea;
+    }
+
+    @Override
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    @Override
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    @Override
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
     public void setAction(){
     }
     public void update(){ 

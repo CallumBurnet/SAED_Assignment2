@@ -1,20 +1,9 @@
 package org.example.entity;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.awt.*;
-import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import org.example.GamePanel;
 import org.example.InputHandler;
-import org.example.UtilTool;
-import org.example.object.Armor;
-import org.example.object.Weapon;
-
-import com.google.common.escape.ArrayBasedCharEscaper;
 
 public class Player extends Entity {
     GamePanel gp;
@@ -27,6 +16,9 @@ public class Player extends Entity {
         
         x = playerX;
         y = playerY;
+
+        System.out.println("SHOULD BE SET");
+
         solidArea = new Rectangle(8,16,32,32);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
@@ -78,6 +70,7 @@ public class Player extends Entity {
     
               
             }
+            this.gp.gameAPI.notifyPlayerMove(direction);
             //Check tile collision
             collisionOn = false;
             gp.cDetector.checkTile(this);
@@ -89,6 +82,8 @@ public class Player extends Entity {
             interact(npcIndex, "npc");
             int obsIndex = gp.cDetector.checkEntity(this, gp.obstacles);
             interact(obsIndex, "obstacle");
+            int goalIndex = gp.cDetector.checkEntity(this, gp.goals);
+            interact(goalIndex, "goal");
 
             //If collision false
             if(collisionOn == false){
@@ -125,6 +120,8 @@ public class Player extends Entity {
     public void pickUpItem(int i){
         if(i != 999 && collisionOn == false){ //999 means we didnt pick up[ anythign]
             inventory.add(gp.obj[i]);
+            gp.gameAPI.notifyNewItemAcquired(gp.obj[i]);
+
             gp.obj[i] = null;
 
         }
@@ -138,12 +135,16 @@ public class Player extends Entity {
                 }else if(nature.equals("obstacle")){
                     System.out.println(gp.obstacles[i].unlocked == true);
                     if(hasItem(i) || gp.obstacles[i].unlocked == true){
+                        System.out.println("sending to notify");
+                        gp.gameAPI.notifyOnObstacleDefeated(gp.obstacles[i]);
                         gp.obstacles[i] = null;
 
                     }else{
                         gp.gameState = gp.dialogueState;
                         gp.obstacles[i].displayDialogue();
                     }
+                }else if(nature.equals("goal")){
+                    gp.gameState = gp.titleState;
                 }
             }
             gp.keyH.enterPressed = false;

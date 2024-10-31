@@ -2,10 +2,14 @@ package org.example;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InputHandler implements KeyListener{
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, tabPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, tabPressed, enterPressed, escapePressed;
+    private Map<Character, Integer> customKeyCodes = new HashMap<>();
+
     public InputHandler(GamePanel gp){
         this.gp = gp;
     }
@@ -22,12 +26,12 @@ public class InputHandler implements KeyListener{
             if(code == KeyEvent.VK_W){
                 gp.ui.commandNum --;
                 if(gp.ui.commandNum < 0){
-                    gp.ui.commandNum = 1;
+                    gp.ui.commandNum = 2;
                 }
             }
             if(code == KeyEvent.VK_S){
                 gp.ui.commandNum ++;
-                if(gp.ui.commandNum > 1){
+                if(gp.ui.commandNum > 2){
                     gp.ui.commandNum = 0;
                 }
             }if(code == KeyEvent.VK_ENTER){
@@ -36,6 +40,10 @@ public class InputHandler implements KeyListener{
                         gp.gameState = gp.playState;
                         break;
                     case 1:
+                        System.out.println("HERE");
+                        gp.gameState = gp.languageState;
+                        break;
+                    case 2:
                         System.exit(0);
                         break;
                 }
@@ -45,6 +53,9 @@ public class InputHandler implements KeyListener{
             if(tabPressed == true){
                 menuManager(code);
             }else{
+                if(code == KeyEvent.VK_ESCAPE){
+                    gp.gameState = gp.titleState;
+                }
                 if(code == KeyEvent.VK_W){
                     upPressed = true;
                 }
@@ -67,6 +78,14 @@ public class InputHandler implements KeyListener{
                         gp.gameState = gp.playState;
                     }
                 }
+                for (Map.Entry<Character, Integer> entry : customKeyCodes.entrySet()) {
+                    if (code == entry.getValue()) {
+
+                        gp.gameAPI.notifyOnCustomKeyPressed(entry.getKey());
+
+                        // Custom logic for this key can be added here
+                    }
+                }
                 
             }
             if(code == KeyEvent.VK_X){
@@ -82,6 +101,30 @@ public class InputHandler implements KeyListener{
             if(code == KeyEvent.VK_ENTER){
                 gp.gameState = gp.playState;
             }
+        }else if(gp.gameState == gp.languageState){
+            char c = e.getKeyChar();
+            System.out.println(c);
+
+
+            // Check for Enter key to confirm input
+            if (c == KeyEvent.VK_ENTER) {
+                // Process the input (e.g., change locale)
+                System.out.println(gp.ui.userInput);
+                gp.gameLocal.setLocale(gp.ui.userInput);
+                gp.ui.userInput = ""; // Reset input after confirmation
+
+            }
+            // Handle backspace for deleting characters
+            else if (c == KeyEvent.VK_BACK_SPACE && gp.ui.userInput.length() > 0) {
+                gp.ui.userInput = gp.ui.userInput.substring(0, gp.ui.userInput.length() - 1);
+            }
+            // Only add letters, numbers, or valid characters to the input
+            else if (Character.isLetterOrDigit(c) || c == '-' || c == '_') {
+                gp.ui.userInput += c;
+            }else if(c == KeyEvent.VK_ESCAPE){
+                gp.gameState = gp.playState;
+            }
+
         }
     }
     public void menuManager(int code){
@@ -117,8 +160,19 @@ public class InputHandler implements KeyListener{
         }
         if(code == KeyEvent.VK_D){
             rightPressed = false;
+        }if(code == KeyEvent.VK_ENTER){
+
         }
         
+    }
+    public void addCustomKey(Character letter) {
+        // Convert the character to uppercase to match KeyEvent constants (e.g., VK_A)
+        char upperLetter = Character.toUpperCase(letter);
+        int keyCode = KeyEvent.getExtendedKeyCodeForChar(upperLetter);
+
+        // Store the character and its key code in the map
+        customKeyCodes.put(letter, keyCode);
+        System.out.println("Added custom key: " + letter + " with key code: " + keyCode);
     }
 
 }

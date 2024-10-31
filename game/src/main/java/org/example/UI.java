@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.example.environment.GameLocalization;
 import org.example.object.Weapon;
 
 public class UI {
@@ -25,6 +26,8 @@ public class UI {
     public int slotRow = 0;
     public int commandNum =0;
     public String currentDialogue;
+    private GameLocalization gameLocal;
+    public String userInput = "";
     public UI(GamePanel gp, InputHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
@@ -32,6 +35,7 @@ public class UI {
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         
         this.uiY = gp.screenWidth-250;
+        this.gameLocal = gp.gameLocal;
         
     }
     public void getUIImage(){
@@ -73,7 +77,7 @@ public class UI {
                 int cursorY = slotYstart+  (gp.tileSize * slotRow);
                 int cursorWidth = gp.tileSize;
                 int cursorHeight = gp.tileSize ;
-                //Drawing cursor
+                //DrawAing cursor
                 g2.setColor(Color.white);
                 g2.setStroke(new BasicStroke(3));
                 g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
@@ -93,17 +97,29 @@ public class UI {
                     drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
                     g2.setFont(g2.getFont().deriveFont(29F));
                     g2.setColor(Color.white);
-                    g2.drawString(gp.player.inventory.get(itemIndex).name, textX, textY);
+
+                    g2.drawString(gameLocal.getText(gp.player.inventory.get(itemIndex).name), textX, textY);
                     g2.setFont(g2.getFont().deriveFont(20F));
-                    g2.drawString(gp.player.inventory.get(itemIndex).description, textX, textY+ 20);
+                    g2.drawString(gameLocal.getText(gp.player.inventory.get(itemIndex).description), textX, textY+ 20);
 
                }
+                drawSubWindow(gp.screenWidth- 6* gp.tileSize, gp.screenHeight- 3* gp.tileSize, 6*gp.tileSize, 3*gp.tileSize);
+                g2.setFont(g2.getFont().deriveFont(20F));
+                g2.setColor(Color.white);
+                textX = gp.screenWidth - 5* gp.tileSize ;
+                textY = gp.screenHeight -  1* gp.tileSize;
+                g2.drawString(gp.gameDate.getFormattedDate(), textX, textY);
+
+
+
             }
         }else if(gp.gameState == gp.dialogueState){
             
             drawDialogueScreen();
         }else if(gp.gameState == gp.deathState){
             drawDeathScreen();
+        }else if(gp.gameState == gp.languageState){
+            drawLanuageScreen();
         }
         
         
@@ -113,6 +129,28 @@ public class UI {
         return itemIndex;
 
     }
+    public void drawLanuageScreen(){
+        //Locale
+//Name
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
+        g2.setColor(Color.WHITE);
+        String text = gameLocal.getText("enter_language_tag");
+        //function to find centre for the text
+        int x = getXforCenterScreen(text);
+        int y = gp.tileSize*3;
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+
+        //Name
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+
+        y += gp.tileSize*4;
+        if(userInput != null){
+            text = userInput;
+            g2.drawString(text, x, y);
+
+        }
+    }
     public void drawSubWindow(int x, int y, int width, int height){
         Color c = new Color(0,0,0,210);
         g2.setColor(c);
@@ -121,9 +159,11 @@ public class UI {
         g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
     }
     public void drawTitleScreen(){
+        //Locale
+
         //Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String text = "Peppa Farm";
+        String text = gameLocal.getText("game_name");
         //function to find centre for the text
         int x = getXforCenterScreen(text);
         int y = gp.tileSize*3;
@@ -132,24 +172,34 @@ public class UI {
         //-------MENU-----//
         //--NEW GAME--//
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-        text = "NEW GAME";
-        y += gp.tileSize*4; 
+        text = gameLocal.getText("new_game");
+        y += gp.tileSize*4;
         g2.drawString(text, x, y);
         if(commandNum == 0){
             g2.drawString(">", x-gp.tileSize, y);
         }
+        //-Languages-/
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-        text = "Exit";
-        y += gp.tileSize*6; 
+        text = gameLocal.getText("choose_language");
+        y += gp.tileSize*5;
         g2.drawString(text, x, y);
         if(commandNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        text = "Exit";
+        y += gp.tileSize*6;
+        g2.drawString(text, x, y);
+        if(commandNum == 2){
             g2.drawString(">", x-gp.tileSize, y);
         }
     }
     public void drawDeathScreen(){
         //Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String text = "You Died";
+        g2.setColor(Color.WHITE);
+        String text = gameLocal.getText("died");
         //function to find centre for the text
         int x = getXforCenterScreen(text);
         int y = gp.tileSize*3;
@@ -158,14 +208,14 @@ public class UI {
         //-------MENU-----//
         //--NEW GAME--//
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-        text = "NEW GAME";
+        text = gameLocal.getText("new_game");
         y += gp.tileSize*4; 
         g2.drawString(text, x, y);
         if(commandNum == 0){
             g2.drawString(">", x-gp.tileSize, y);
         }
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-        text = "Exit";
+        text = gameLocal.getText("exit_game");
         y += gp.tileSize*6; 
         g2.drawString(text, x, y);
         if(commandNum == 1){
@@ -182,7 +232,7 @@ public class UI {
         x+= gp.tileSize;
         y+=gp.tileSize;
         g2.setColor(Color.white);
-        g2.drawString(currentDialogue, x, y);
+        g2.drawString(gameLocal.getText(currentDialogue), x, y);
     }
     public int getXforCenterScreen(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();

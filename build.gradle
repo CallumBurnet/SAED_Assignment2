@@ -10,5 +10,10 @@ allprojects {
     repositories {
         mavenCentral()
     }
+    dependencies {
+        testImplementation platform('org.junit:junit-bom:5.10.0')
+        implementation 'org.python:jython-standalone:2.7.1'
+
+    }
 
 }

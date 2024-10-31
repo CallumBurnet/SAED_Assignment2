@@ -2,13 +2,15 @@ package org.example;
 
 import java.util.List;
 import java.util.Map;
-import org.checkerframework.checker.units.qual.s;
+
 import org.example.entity.Entity;
 import org.example.entity.TrappedGuy;
+import org.example.object.Goal;
 import org.example.object.Obstacle;
 import org.example.object.Weapon;
+import org.engine.GamePlugin;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class AssetSetter {
     Map<String, ArrayList<int[]>> obstacles;
@@ -28,20 +30,31 @@ public class AssetSetter {
     }
     public void setObject(){
 
-        gp.obj[0] = new Weapon(gp, "White Sword","Use carefully",  "sword");
+        gp.obj[0] = new Weapon(gp, "melted_blade","use_carefully",  "sword");
         gp.obj[0].x =  6* gp.tileSize;
         gp.obj[0].y =  6 *gp.tileSize;
         itemCounter ++;
         setItemToEntity();
     }
+    public void setGoal(){
+        int[] goal = cfg.getGoal();
+        // Ensure the list has enough capacity, or add a new element at index 0
+        
+
+        gp.goals[0]=new Goal(gp);
+        gp.goals[0].x = goal[0] * gp.tileSize;
+        gp.goals[0].y = goal[1] * gp.tileSize;
+        
+
+      
+
+    }
+
     public void setObstacles(){
         setObstacleToEntity();
     }
     public void setTimedObstacle(String name, int time){
-        for(int i  = 0; i <= gp.obstacles.length; i++){
-            System.out.println("FOUND A SLOT" + i);
-        }
-            
+
         System.out.println("NEW OBJ");
         gp.obstacles[9] = new Obstacle(gp,"", true, time);
         gp.obstacles[9].x = 8 * gp.tileSize;
@@ -55,7 +68,12 @@ public class AssetSetter {
 
 
     }
-    
+    public void addItem(String name, String des, String type, boolean isAction, GamePlugin plugin){
+
+       Item item = new Item("teleporter",6* gp.tileSize, 7* gp.tileSize , "Press t to teleport", plugin);
+    }
+
+
     public void setItemToEntity() {
         // Assuming `items` is a list of parsed items with names
         for (Item item : items) {

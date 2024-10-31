@@ -12,6 +12,7 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
     implementation project(":api")
+    implementation project(":plugin")
 }
 
 javacc {

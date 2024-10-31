@@ -44,6 +44,10 @@ public class GameConfig {
     public void addScript(String script){
         scripts.add(script);
     }
+    public ArrayList<String> getScripts(){
+        return scripts;
+    }
+
     public void addItem(Item item){
         itemList.add(item);
     }

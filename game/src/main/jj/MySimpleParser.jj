@@ -46,9 +46,9 @@ TOKEN: {
     < RPAREN: ")" > |
     < COMMA: "," > |
     <PLUGIN_NAME: (["a"-"z", "A"-"Z"])+ ("." (["a"-"z", "A"-"Z"])+)*>|
-
+   // Captures everything until a closing brace "}"
     < NUMBER: (["0"-"9"])+ >
-    
+
 }
 
 void parseGameConfig(GameConfig config) :
@@ -165,11 +165,11 @@ void itemConfig(GameConfig config) :
                 "at" <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
                 {
                     System.out.println("CUH");
-                    items.add(new Item(itemName.image, Integer.parseInt(x.image), Integer.parseInt(y.image), null));
+                    items.add(new Item(itemName.image, Integer.parseInt(x.image), Integer.parseInt(y.image), null,null));
                 }
                 ("," <LPAREN> x=<NUMBER> <COMMA> y=<NUMBER> <RPAREN>
                 {
-                    items.add(new Item(itemName.image, Integer.parseInt(x.image), Integer.parseInt(y.image), null));
+                    items.add(new Item(itemName.image, Integer.parseInt(x.image), Integer.parseInt(y.image), null, null));
                 })* 
                 <MESSAGE> message=<STRING_LITERAL> 
             <BRACE_CLOSE>
@@ -220,26 +220,28 @@ void scriptConfig(GameConfig config) :
 {
     <SCRIPT> <EXCLAMATION> <BRACE_OPEN>
     {
-        // Capture everything as free text until we reach the closing brace
-        while (true) {
-            Token currentToken = getNextToken();
+    // Capture tokens until we reach the closing brace
+    while (true) {
+        Token currentToken = getNextToken();
 
-            // Stop on the closing brace
-            if (currentToken.kind == BRACE_CLOSE) {
-                break;
-            }
-
-            // Append each token’s image as part of the script content
-            scriptContent.append(currentToken.image);
+        // Stop on the closing brace
+        if (currentToken.kind == BRACE_CLOSE) {
+            break;
         }
+
+        // Append each token’s image as part of the script content
+        scriptContent.append(currentToken.image).append(" ");
     }
-    {
-        // Add the captured script content to GameConfig and print it
-        String fullScript = scriptContent.toString().trim();
-        config.addScript(fullScript);
-        System.out.println("Parsed script content:\n" + fullScript);
-    }
+
+    // Add the captured script content to GameConfig and print it
+    String fullScript = scriptContent.toString().trim();
+    config.addScript(fullScript);
+    System.out.println("Parsed script content:\n" + fullScript);
 }
+}
+
+
+
 
 
 
