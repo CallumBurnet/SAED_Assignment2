@@ -1,4 +1,4 @@
-package org.example.pluginengine;
+package org.pluginengine;
 
 import org.example.entity.Entity;
 import org.example.entity.Player;

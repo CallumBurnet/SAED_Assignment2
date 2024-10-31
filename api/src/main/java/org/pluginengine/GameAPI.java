@@ -1,4 +1,4 @@
-package org.example.pluginengine;
+package org.pluginengine;
 
 import org.example.Item;
 import org.example.entity.*;

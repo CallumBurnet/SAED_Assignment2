@@ -1,4 +1,4 @@
-package org.example.pluginengine;
+package org.pluginengine;
 
 import java.util.ArrayList;
 import java.util.List;

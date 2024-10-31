@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+allprojects {
+    apply plugin: 'java'
+    task('hello').doLast {
+        println "I'm $project.name"
+    }
+    repositories {
+        mavenCentral()
+    }
+
+}

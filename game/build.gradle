@@ -11,6 +11,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation libs.guava
+    implementation project(":api")
 }
 
 javacc {
@@ -23,7 +24,7 @@ javacc {
             staticParam = 'false'         // Add this line to set staticParam to false
             lookahead = '2'
         }
-        
+
         // parser {
         //     inputFile = file("src/main/jj/parser.jj")
         //     packageName = "org.example"

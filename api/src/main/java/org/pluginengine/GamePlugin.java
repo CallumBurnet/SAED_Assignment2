@@ -1,4 +1,4 @@
-package org.example.pluginengine;
+package org.pluginengine;
 
 public interface GamePlugin {
     void initialize(GameAPI gameAPI);

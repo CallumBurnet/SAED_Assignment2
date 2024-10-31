@@ -10,11 +10,10 @@ import javax.swing.JPanel;
 
 import org.example.entity.Entity;
 import org.example.entity.Player;
-import org.example.environment.EnvironmentManager;
 import org.example.object.Obstacle;
-import org.example.pluginengine.GamePlugin;
-import org.example.pluginengine.PluginLoader;
-import org.example.pluginengine.SimpleGameAPI;
+import org.pluginengine.GamePlugin;
+import org.pluginengine.PluginLoader;
+import org.pluginengine.SimpleGameAPI;
 import org.example.tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{

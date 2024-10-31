@@ -12,4 +12,7 @@ plugins {
 }
 
 rootProject.name = 'SAED_Assignment2'
-include 'app'
+include 'game'
+include 'plugin'
+include 'api'
+
