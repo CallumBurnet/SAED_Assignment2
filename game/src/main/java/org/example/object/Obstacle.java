@@ -1,5 +1,6 @@
 package org.example.object;
 
+import org.checkerframework.checker.units.qual.t;
 import org.example.GamePanel;
 import org.example.entity.Entity;
 
@@ -8,13 +9,28 @@ public class Obstacle extends Entity{
     public Boolean unlocked;
     public int timer;
     public boolean timed;
-    public Obstacle(GamePanel gp, String requires,Boolean timed, int time){
+    public Boolean collision;
+    public String type;
+    public Obstacle(GamePanel gp, String requires,Boolean timed, int time, String type){
             super(gp);
-            collision = true;
+            this.collision = true;
             this.requires = requires;
             this.timed = timed;
             this.timer = time;
-            down1 = setup("/objects/diamondsword");  
+            this.type = type;
+            System.out.println("OBS TYPE " + type);
+            if(type.contains("key")){
+                down1 = setup("/objects/door");  
+
+            }else if(type.contains("priest")){
+                down1 = setup("/objects/water");
+            
+
+            }else if(type.contains("ring")){
+                down1 = setup("/objects/hand");
+            }else{
+                down1 = setup("/objects/box");  
+            }
             setDialogue();
             
     }
@@ -26,7 +42,7 @@ public class Obstacle extends Entity{
         }else{
             unlocked = false;
         }
-        dialogue[0] = requireString ;
+        dialogue[0] = "requires_"+requireString ;
     }
     public void displayDialogue(){
         gp.ui.currentDialogue = dialogue[0];
@@ -39,6 +55,9 @@ public class Obstacle extends Entity{
     }
     public void decreaseTimer(){
         timer--;
+    }
+    public void setCollision(boolean coll){
+        this.collision = coll;
     }
     
     

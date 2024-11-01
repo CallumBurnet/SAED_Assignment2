@@ -10,7 +10,6 @@ import org.entity.APIEntity;
 import org.example.GamePanel;
 import org.example.UtilTool;
 import java.awt.Graphics2D;
-import java.io.Serializable;
 
 public class Entity implements APIEntity {
     public GamePanel gp;

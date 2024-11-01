@@ -12,7 +12,6 @@ public class Weapon extends Entity{
         super(gp);
 
         this.name = name;
-        System.out.println("HERE");
         switch(type.toLowerCase()){
             case "sword":
                 System.out.println("ITS A SWORD");
@@ -22,8 +21,25 @@ public class Weapon extends Entity{
                 down1 = setup("/objects/copperDagger");
                 break;
             case "axe":
-                down1 = setup("/objects/diamondsword");
+                down1 = setup("/objects/wooden_axe");
                 break;
+            case "key":
+                down1 = setup("/objects/key");
+                break;
+            case "jacket":
+                down1 = setup("/objects/shirt");
+                break;
+            case "map":
+                down1 = setup("/objects/map");
+                break;
+            case "ring":
+                down1 = setup("/objects/ring");
+                break;
+            case "technology":
+                down1 = setup("/objects/technology_symbol");
+                break;
+
+            
                 
         }
         this.description = des;

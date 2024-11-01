@@ -3,7 +3,6 @@ package org.example.plugins;
 import org.engine.GameAPI;
 import org.engine.GameEvent;
 import org.engine.GameEventCallback;
-import org.entity.APIEntity;
 import org.engine.GamePlugin;
 
 public class Reveal implements GamePlugin, GameEventCallback {

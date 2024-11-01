@@ -3,15 +3,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.swing.JPanel;
 
-import org.engine.GameAPI;
 import org.engine.ScriptHandler;
 import org.example.entity.Entity;
 import org.example.entity.Player;
@@ -47,29 +42,31 @@ public class GamePanel extends JPanel implements Runnable{
     int playerY;
     int playerSpeed = 4;
     public Player player;
-    public Entity obj[] = new Entity[20]; //10 slots
+    public Entity obj[] = new Entity[30]; //10 slots
     public Entity npc[] = new Entity[10];
-    public Obstacle obstacles[] = new Obstacle[10];
+    public Obstacle obstacles[] = new Obstacle[20];
     public Goal goals[] = new Goal[10];
     public ArrayList<Entity> entityList = new ArrayList<>();
     public List<GamePlugin> plugins;
     //GameState implementation
     public int gameState;
-    public static int titleState = 0;
-    public static int playState = 1;
-    public static int pauseState =2;
-    public static int dialogueState = 3;
-    public static int deathState = 4;
-    public static int languageState = 5;
+    public int titleState = 0;
+    public int playState = 1;
+    public int pauseState =2;
+    public int dialogueState = 3;
+    public int deathState = 4;
+    public int languageState = 5;
+    public int victoryState = 6;
+    public int restartState = 7;
     private int obstacleTimer = 0;
     public AssetSetter assetSetter;
     public Boolean visible;
     public SimpleGameAPI gameAPI;
-    private ResourceBundle bundle;
     public GameLocalization gameLocal;
     public GameDate gameDate;
-    private int days = 0;
+    public int days = 0;
     private int secondTimer = 0;
+    private GameConfig config;
     EnvironmentManager environmentManager = new EnvironmentManager(this);
 
     public GamePanel(GameConfig config){
@@ -80,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable{
         // Print out localized strings to check for correct display
         System.out.println(gameLocal.getText("game_name"));
         //----Getting the config----//
+        this.config = config;
         int[] size = config.getSize();
         int[] start = config.getStart();
         this.maxScreenCol = size[0];
@@ -99,19 +97,12 @@ public class GamePanel extends JPanel implements Runnable{
 
         PluginLoader pluginLoader = new PluginLoader();
         this.gameAPI = new SimpleGameAPI(this);
-        ArrayList<String> pluginsToLoad = config.getPlugins();
-        ArrayList<String> scriptsToLoad = config.getScripts();
+        List<String> pluginsToLoad = config.getPlugins();
         for (String pluginName : pluginsToLoad) {
             pluginLoader.loadPlugin(pluginName, gameAPI);
             System.out.println("Loaded plugin: " + pluginName);
         }
-        ScriptHandler scriptHandler = new ScriptHandler(gameAPI);
-
-        for (String script : scriptsToLoad) {
-            // Assuming you have a method to process or execute the script, e.g., executeScript
-            scriptHandler.runScript(script);
-            System.out.println("Executed script:\n" + script);
-        }
+       
 
         plugins =  pluginLoader.getPlugins();
         for(GamePlugin plugin : plugins){
@@ -133,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         assetSetter.setObject();
         assetSetter.setNPC();
-        assetSetter.setObstacles();
+        assetSetter.setObstacleToEntity();
         assetSetter.setGoal();
         //game state
         gameState = titleState;
@@ -149,6 +140,20 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread = new Thread(this);
         environmentManager.setup();
         gameThread.start();
+        ScriptHandler scriptHandler = new ScriptHandler(gameAPI);
+        List<String> scriptsToLoad = config.getScripts();
+        //scriptHandler.runScript("api.createIdleObstacleAfterDelay('death', 0)");
+
+        for (String script : scriptsToLoad) {
+            String parsedScript = script.trim();
+            if (parsedScript.startsWith("\"") && parsedScript.endsWith("\"")) {
+                parsedScript = parsedScript.substring(1, parsedScript.length() - 1);
+            }
+            // Assuming you have a method to process or execute the script, e.g., executeScript
+            System.out.println("SCRIPT :" + parsedScript);
+            scriptHandler.runScript(parsedScript);
+            System.out.println("Executed script:\n" + parsedScript);
+        }
     }
     @Override //THE GAME LOOP IS HERE
     public void run(){
@@ -172,6 +177,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
             if(timer >= 1000000000){
                 System.out.println("FPS:" + drawCount);
+                gameAPI.onSecondPassed();
                 System.out.println("Game State " + this.gameState);
                 drawCount =0;
                 timer = 0;
@@ -197,6 +203,9 @@ public class GamePanel extends JPanel implements Runnable{
 
         }if(gameState == pauseState){
 
+        }else if(gameState == restartState){
+            resetGame(config); // Pass the initial GameConfig for restart
+            gameState = playState;
         }
     }
     @Override
@@ -212,19 +221,18 @@ public class GamePanel extends JPanel implements Runnable{
             //object
             entityList.add(player);
 
-            for(int i = 0; i < obj.length; i++){
-                if(obj[i]!= null){
-                    entityList.add(obj[i]);
-
-                }
-            }
-            for(int i = 0; i < goals.length; i++){
-                if(goals[i]!= null){
-                    System.out.println("Goal");
-                    entityList.add(goals[i]);
-
-                }
-            }
+            for (Entity element : obj) {
+                            if(element!= null){
+                                entityList.add(element);
+            
+                            }
+                        }
+            for (Goal goal : goals) {
+                            if(goal!= null){
+                                entityList.add(goal);
+            
+                            }
+                        }
             obstacleTimer ++;
             for(int i = 0; i < obstacles.length; i++){
                 if(obstacles[i]!= null){
@@ -248,25 +256,25 @@ public class GamePanel extends JPanel implements Runnable{
     
                 }
             }
-            for(int i = 0; i < npc.length; i++){
-                if(npc[i]!= null){
-                    entityList.add(npc[i]);
-    
-                }
-            }        
+            for (Entity element : npc) {
+                            if(element!= null){
+                                entityList.add(element);
+                
+                            }
+                        }        
 
 
-            for(int i = 0; i < entityList.size(); i++){
-                entityList.get(i).draw(g2);
-            }
+            for (Entity element : entityList) {
+                            element.draw(g2);
+                        }
             for(int i = 0; i < entityList.size(); i++){
                 entityList.remove(i);
             }
             //The light
-            if(visible == true){
-                environmentManager.draw(g2);
+            
+            //environmentManager.draw(g2,visible );
 
-            }
+            
 
             ui.draw(g2);
             g2.dispose(); //mem saver
@@ -275,4 +283,41 @@ public class GamePanel extends JPanel implements Runnable{
         
         
     }
+    public void resetGame(GameConfig config) {
+        // Reinitialize all game properties
+        this.gameState = titleState;
+        this.playerX = config.getStart()[0] * tileSize;
+        this.playerY = config.getStart()[1] * tileSize;
+        
+        // Reinitialize components that were instantiated in the constructor
+        this.tileManager = new TileManager(this);
+        this.cDetector = new CollisionDetector(this);
+        this.assetSetter = new AssetSetter(this, config);
+        this.player = new Player(this, keyH, this.playerX, this.playerY);
+        this.ui = new UI(this, keyH);
+        this.entityList.clear(); // Clear entities to avoid duplicates
+    
+        // Reset environment manager or any other instance that holds state
+        this.environmentManager = new EnvironmentManager(this);
+        this.plugins.clear(); // Clear and reload plugins if necessary
+    
+        // Reset obstacle timer, day counter, and any other counters
+        this.obstacleTimer = 0;
+        this.days = 0;
+        this.secondTimer = 0;
+    
+        // Reinitialize any specific objects or NPCs
+        this.assetSetter.setObject();
+        this.assetSetter.setNPC();
+        this.assetSetter.setObstacleToEntity();
+        this.assetSetter.setGoal();
+        
+        // Optionally re-run plugins or scripts if needed
+        for(GamePlugin plugin : plugins) {
+            plugin.execute();
+        }
+    
+        System.out.println("Game has been reset.");
+    }
+    
 }

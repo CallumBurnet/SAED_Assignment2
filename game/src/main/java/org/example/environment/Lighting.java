@@ -1,6 +1,7 @@
 package org.example.environment;
 
 import org.example.GamePanel;
+import org.example.entity.Entity;
 
 import com.google.common.primitives.Floats;
 
@@ -13,6 +14,8 @@ public class Lighting {
     BufferedImage darknessFilter;
     int circleSize;
     Area screenArea;
+    Shape item;
+
     public Lighting(GamePanel gp, int circleSize){
         this.gp = gp;
         this.circleSize = circleSize;
@@ -20,11 +23,10 @@ public class Lighting {
         Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
         Area screenArea = new Area(new Rectangle2D.Double(0,0, gp.screenWidth, gp.screenHeight));
         this.screenArea = screenArea;
-        
 
 
     }
-    public void draw(Graphics2D g2, String mode) {
+    public void draw(Graphics2D g2,boolean visible) {
         // Reset the darkness filter
         this.darknessFilter = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D gFilter = (Graphics2D) darknessFilter.getGraphics();
@@ -41,9 +43,43 @@ public class Lighting {
         double y = centreY - (circleSize / 2);
         Shape circleShape = new Ellipse2D.Double(x, y, circleSize, circleSize);
         Area lightArea = new Area(circleShape);
-        
-        // Subtract the light area from the screen area
         screenArea.subtract(lightArea);
+        if(visible){
+            for(Entity obj : gp.obj){
+                if(obj != null){
+                    x = obj.x + gp.tileSize/2;
+                    y = obj.y + gp.tileSize/2;
+                    item =new Ellipse2D.Double(
+                        x - circleSize / 4, // Offset by half the circleSize to center
+                        y - circleSize / 4, // Offset by half the circleSize to center
+                        circleSize/2,                  // Circle width
+                        circleSize/2                  // Circle height
+                    );
+                    lightArea = new Area(item);
+                    screenArea.subtract(lightArea);
+    
+    
+                }
+            }
+            for(Entity obs : gp.obstacles){
+                if(obs != null){
+                    x = obs.x + gp.tileSize/2;
+                    y = obs.y + gp.tileSize/2;
+                    item =new Ellipse2D.Double(
+                        x - circleSize / 4, // Offset by half the circleSize to center
+                        y - circleSize / 4, // Offset by half the circleSize to center
+                        circleSize/2,                  // Circle width
+                        circleSize/2                  // Circle height
+                    );
+                    lightArea = new Area(item);
+                    screenArea.subtract(lightArea);
+    
+    
+                }
+            }
+        }
+       
+        
         
         // Set up gradient for the light circle
         Color[] colors = { new Color(0, 0, 0, 0f), new Color(0, 0, 0, 0.25f), new Color(0, 0, 0, 0.5f), new Color(0, 0, 0, 0.75f), new Color(0, 0, 0, 0.93f) };
@@ -62,6 +98,7 @@ public class Lighting {
         // Draw the darkness filter on the screen
         g2.drawImage(darknessFilter, 0, 0, null);
     }
+  
     
     
 }

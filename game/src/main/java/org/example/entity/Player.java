@@ -19,7 +19,7 @@ public class Player extends Entity {
 
         System.out.println("SHOULD BE SET");
 
-        solidArea = new Rectangle(8,16,32,32);
+        solidArea = new Rectangle(8,16,28,28);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         setDeafultValues();
@@ -30,6 +30,9 @@ public class Player extends Entity {
         speed = 4;
         direction = "down";
         //inventory.add(new Sword());
+    }
+    public ArrayList<Entity> getInventory(){
+        return inventory;
     }
     public void getPlayerImage(){
        
@@ -87,7 +90,10 @@ public class Player extends Entity {
 
             //If collision false
             if(collisionOn == false){
+                gp.gameAPI.onPlayerMove(direction);
+
                 switch (direction) {
+
                     case "up":
                         y -= speed;
 
@@ -126,6 +132,9 @@ public class Player extends Entity {
 
         }
     }
+    public void addItem(Entity weapon){
+        inventory.add(weapon);
+    }
     public void interact(int i, String nature){
         if(i != 999 ){ //999 means we didnt pick up[ anythign]
            
@@ -138,13 +147,16 @@ public class Player extends Entity {
                         System.out.println("sending to notify");
                         gp.gameAPI.notifyOnObstacleDefeated(gp.obstacles[i]);
                         gp.obstacles[i] = null;
+                        
+
+                        
 
                     }else{
                         gp.gameState = gp.dialogueState;
                         gp.obstacles[i].displayDialogue();
                     }
                 }else if(nature.equals("goal")){
-                    gp.gameState = gp.titleState;
+                    gp.gameState = gp.victoryState;
                 }
             }
             gp.keyH.enterPressed = false;

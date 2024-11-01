@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import org.checkerframework.checker.initialization.qual.UnderInitialization;
 import org.example.GamePanel;
 import org.example.UtilTool;
 
@@ -25,8 +24,13 @@ public class TileManager {
     }
     public void getTileImage(){
         
-        setup(0, "grass01", false);
-        setup(1, "wall", true);
+        setup(0, "floor_plain", false);
+        setup(1, "basic_wall", true);
+        setup(2, "window_wall", true);
+        setup(8, "parted_water", false);
+
+        setup(9, "opened_door", false);
+
 
     }
     public void setup(int index, String imagePath, boolean collision){
@@ -43,7 +47,7 @@ public class TileManager {
     public void loadMap(){
         try{
             //Get the map
-            InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
+            InputStream is = getClass().getResourceAsStream("/maps/map01.txt"); 
             //Read the map line by line
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             
@@ -62,6 +66,7 @@ public class TileManager {
                     row ++;
                 }
             }
+            is.close();
             br.close();
         }catch(Exception e){
             

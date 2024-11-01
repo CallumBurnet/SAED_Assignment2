@@ -18,6 +18,7 @@ public class Teleport implements GamePlugin,GameEventCallback {
     @Override
     public void execute() {
         // Optionally, any other actions or initialization needed for the plugin
+        gameAPI.addItem("teleporter", "press_t", "technology", null);
         gameAPI.addCustomKeyListener('t');
     }
 
@@ -39,6 +40,7 @@ public class Teleport implements GamePlugin,GameEventCallback {
                         System.out.println("Teleported to: (" + newX + ", " + newY + ")");
 
                         hasTeleported = true; // Mark teleport as used
+                        gameAPI.removeItem("teleporter");
                     }
 
 

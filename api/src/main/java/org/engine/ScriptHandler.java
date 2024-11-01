@@ -12,8 +12,9 @@ public class ScriptHandler {
     public void runScript(String pythonScript) {
         PythonInterpreter interpreter = new PythonInterpreter();
         interpreter.set("api", api); // Bind API
-
+        
         // Execute script code
         interpreter.exec(pythonScript);
+        interpreter.close();
     }
 }

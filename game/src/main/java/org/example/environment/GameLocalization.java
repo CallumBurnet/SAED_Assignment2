@@ -22,6 +22,8 @@ public class GameLocalization {
         System.out.println("Loading bundle for locale: " + currentLocale);
 
         bundle = ResourceBundle.getBundle("MessageBundle/Bundle", currentLocale, new UTF8Control());
+        bundle.keySet().forEach(key -> System.out.println("Loaded key: " + key));
+
     }
     public Locale getCurrentLocal(){
         return currentLocale;
@@ -29,11 +31,15 @@ public class GameLocalization {
 
 
     public String getText(String key) {
-    
-        return bundle.getString(key); // Retrieve text for the given key
-
-        
+        try {
+            return bundle.getString(key); // Retrieve text for the given key
+        } catch (MissingResourceException e) {
+            System.err.println("Missing key: " + key);
+            e.printStackTrace();  // Log the stack trace for further inspection
+            return "[missing text for key: " + key + "]"; // Return a placeholder
+        }
     }
+    
 
     public void setLocale(String languageTag) {
         System.out.println("Switching language to tag: " + languageTag);

@@ -1,0 +1,48 @@
+
+size (20,20)
+start (2,1)
+goal (2,18)
+
+item "golden_key" {
+  at (7,1)
+  message "hold_lightly"
+}
+
+obstacle {
+at (4,5),(6,5)
+requires "golden_key"
+}
+
+item "ring_of_loyalty" {
+  at (5,15)
+  message "ring_of_loyalty_message"
+}
+
+obstacle {
+at (6,13),(1,13)
+requires "wooden_axe"
+}
+item "wooden_axe" {
+  at (18,7)
+  message "hold_lightly"
+}
+obstacle {
+at (4,16)
+requires "priest_jacket"
+}
+obstacle {
+at (18,13)
+requires "ring_of_loyalty"
+}
+item "priest_jacket" {
+  at (13,15)
+  message "protection"
+}
+
+
+script !{
+  "api.createIdleObstacleAfterDelay('death', 0)"
+}
+
+
+

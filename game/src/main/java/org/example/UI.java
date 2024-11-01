@@ -12,7 +12,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.example.environment.GameLocalization;
-import org.example.object.Weapon;
 
 public class UI {
     GamePanel gp;
@@ -97,10 +96,20 @@ public class UI {
                     drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
                     g2.setFont(g2.getFont().deriveFont(29F));
                     g2.setColor(Color.white);
-
-                    g2.drawString(gameLocal.getText(gp.player.inventory.get(itemIndex).name), textX, textY);
+                    
+                    String name = gp.player.inventory.get(itemIndex).name.trim();
+                    if (name.startsWith("\"") && name.endsWith("\"")) {
+                        name = name.substring(1, name.length() - 1);  // Remove leading and trailing quotes
+                    }
+                    
+                    g2.drawString(gameLocal.getText(name), textX, textY);
                     g2.setFont(g2.getFont().deriveFont(20F));
-                    g2.drawString(gameLocal.getText(gp.player.inventory.get(itemIndex).description), textX, textY+ 20);
+                    String description = gp.player.inventory.get(itemIndex).description.trim();
+                    if (description.startsWith("\"") && description.endsWith("\"")) {
+                        description = description.substring(1, description.length() - 1);  // Remove leading and trailing quotes
+                    }
+                    
+                    g2.drawString(gameLocal.getText(description), textX, textY+ 20);
 
                }
                 drawSubWindow(gp.screenWidth- 6* gp.tileSize, gp.screenHeight- 3* gp.tileSize, 6*gp.tileSize, 3*gp.tileSize);
@@ -120,18 +129,20 @@ public class UI {
             drawDeathScreen();
         }else if(gp.gameState == gp.languageState){
             drawLanuageScreen();
+        }else if(gp.gameState == gp.victoryState){
+            drawVictoryScreen();
         }
         
         
     }
     public int getItemIndex(){
-        int itemIndex = slotCol + (slotRow*6);
-        return itemIndex;
+        return slotCol + (slotRow*6);
 
     }
     public void drawLanuageScreen(){
         //Locale
-//Name
+        //Add color
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
         g2.setColor(Color.WHITE);
         String text = gameLocal.getText("enter_language_tag");
@@ -162,43 +173,68 @@ public class UI {
         //Locale
 
         //Name
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 70F));
         String text = gameLocal.getText("game_name");
         //function to find centre for the text
         int x = getXforCenterScreen(text);
-        int y = gp.tileSize*3;
+        int y = gp.tileSize*2;
         g2.setColor(Color.WHITE);
         g2.drawString(text, x, y);
         //-------MENU-----//
         //--NEW GAME--//
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
         text = gameLocal.getText("new_game");
-        y += gp.tileSize*4;
+        y += gp.tileSize*2;
         g2.drawString(text, x, y);
         if(commandNum == 0){
             g2.drawString(">", x-gp.tileSize, y);
         }
         //-Languages-/
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
         text = gameLocal.getText("choose_language");
-        y += gp.tileSize*5;
+        y += gp.tileSize*3;
         g2.drawString(text, x, y);
         if(commandNum == 1){
             g2.drawString(">", x-gp.tileSize, y);
         }
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
         text = "Exit";
-        y += gp.tileSize*6;
+        y += gp.tileSize*3;
         g2.drawString(text, x, y);
         if(commandNum == 2){
             g2.drawString(">", x-gp.tileSize, y);
         }
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+        text = "------------------";
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+        text = "Movement";
+        y += gp.tileSize*2;
+        g2.drawString(text, x, y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        text = "x: view inventory";
+        y += gp.tileSize*2;
+        g2.drawString(text, x, y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        text = "W A S D to move around + inventory viewing";
+        y += gp.tileSize*2;
+        g2.drawString(text, x, y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        text = "Enter for dialogue + Requirements";
+        y += gp.tileSize*2;
+        g2.drawString(text, x, y);
+
     }
     public void drawDeathScreen(){
         //Name
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        g2.setColor(Color.WHITE);
         String text = gameLocal.getText("died");
         //function to find centre for the text
         int x = getXforCenterScreen(text);
@@ -221,6 +257,47 @@ public class UI {
         if(commandNum == 1){
             g2.drawString(">", x-gp.tileSize, y);
         }
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        String text1 = gameLocal.getText("you_survived");
+        text = text1 + " " + gp.days;
+        y += gp.tileSize*3; 
+        g2.drawString(text, x, y);
+        
+    }
+    public void drawVictoryScreen(){
+        //Name
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = gameLocal.getText("victory");
+        //function to find centre for the text
+        int x = getXforCenterScreen(text);
+        int y = gp.tileSize*3;
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+        //-------MENU-----//
+        //--NEW GAME--//
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        text = gameLocal.getText("new_game");
+        y += gp.tileSize*4; 
+        g2.drawString(text, x, y);
+        if(commandNum == 0){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        text = gameLocal.getText("exit_game");
+        y += gp.tileSize*6; 
+        g2.drawString(text, x, y);
+        if(commandNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        String text1 = gameLocal.getText("you_survived");
+        String text2 = gameLocal.getText("days");
+        text = text1 + " " + gp.days + " "+ text2;
+        y += gp.tileSize*3; 
+        g2.drawString(text, x, y);
+        
     }
     public void drawDialogueScreen(){
         int x = gp.tileSize * 2;

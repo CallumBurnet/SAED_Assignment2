@@ -7,10 +7,6 @@ import javax.swing.JFrame;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 public class App {
     public static final int baseMulti = 1;
     public String getGreeting() {
@@ -43,7 +39,7 @@ public class App {
 
                 // Uncomment the line below to call the parse method
                 //parser.parseGameConfig();  // Call your parse method
-
+                inputFileStream.close();
                 } catch (FileNotFoundException e) {
                 System.out.println("File not found: " + inputFilePath);
                 e.printStackTrace();

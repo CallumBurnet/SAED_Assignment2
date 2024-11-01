@@ -11,7 +11,8 @@ public class EnvironmentManager {
     public void setup(){
         lighting = new Lighting(gp, 200);
     }
-    public void draw(Graphics2D g2){
-        lighting.draw(g2, "normal");
+    public void draw(Graphics2D g2, boolean visible){
+        System.out.println(visible);
+        lighting.draw(g2, visible);
     }
 }
