@@ -1,0 +1,62 @@
+#Menu
+game_name = Королевство Пеппы
+greeting = Здравствуйте
+farewell = Пока
+welcome = Добро пожаловать
+new_game = Начать игру
+pause_game = Пауза
+exit_game = Выйти
+died = Вы умерли
+choose_language = Выберите язык
+enter_language_tag = Введите действительный язык IETF
+you_survived = Вы выжили:
+victory = Вы победили в игре
+dagger = Острое оружие
+old_rusted_blade = Старый Ржавый Клинок
+wooden_axe = Деревянный топор
+melted_blade = Древний Белый Клинок
+diamond_sword = Алмазный меч
+priest_jacket = Плащ священника
+requires = Требуется
+days = дней
+escape = Нажато esc
+wasd_instruction = WASD: Движение + просмотр инвентаря
+inventory_instruction = X: для входа в инвентарь
+dialogue_instruction = ENTER: выход из диалога
+#Items
+golden_chest = Золотой сундук
+teleporter = Телепорт
+golden_key = Золотой ключ
+map = Карта
+ring_of_loyalty = Кольцо верности
+teleporter = Телепортация
+great_sword = Великий меч
+
+#Descriptions
+press_t = нажмите t в игре
+use_carefully = Используйте осторожно
+tread_lightly = Идите осторожно
+key_description = Ржавый и старый
+hold_lightly = Держите легко
+protection = Защита всегда мудрое решение...
+map_description = Письмо слишком маленькое, чтобы прочитать
+ring_of_loyalty_message = Тот, кто правит всеми
+axe_description = очень острое лезвие
+great_sword_description = Через боль приходит триумф
+
+#NPC dialogue
+its_been_so_long = Прошло столько времени...
+since_ive_seen_a_face = С тех пор как я видел лицо
+its_so_dark = Здесь так темно
+
+#Requires text
+requires_dagger = Это требует кинжала
+requires_old_rusted_blade = Это требует старого ржавого клинка
+requires_wooden_axe = Это требует деревянного топора
+requires_melted_blade = Это требует древнего белого клинка
+requires_diamond_sword = Это требует алмазного меча
+requires_golden_key = Закрыто...
+requires_wooden_axe = Вам нужно сломать это деревянным топором
+requires_priest_jacket = Разделите воды
+requires_ring_of_loyalty = Жадная рука нуждается в предмете...
+penalty_dialogue = Добавлено препятствие...

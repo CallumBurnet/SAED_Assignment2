@@ -17,7 +17,6 @@ public class Player extends Entity {
         x = playerX;
         y = playerY;
 
-        System.out.println("SHOULD BE SET");
 
         solidArea = new Rectangle(8,16,28,28);
         solidAreaDefaultX = solidArea.x;
@@ -142,7 +141,6 @@ public class Player extends Entity {
                     gp.gameState = gp.dialogueState;
                     gp.npc[i].displayDialogue();
                 }else if(nature.equals("obstacle")){
-                    System.out.println(gp.obstacles[i].unlocked == true);
                     if(hasItem(i) || gp.obstacles[i].unlocked == true){
                         System.out.println("sending to notify");
                         gp.gameAPI.notifyOnObstacleDefeated(gp.obstacles[i]);

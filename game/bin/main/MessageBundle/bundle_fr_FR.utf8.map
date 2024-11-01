@@ -1,0 +1,62 @@
+#Menu
+game_name = Royaume de Peppa
+greeting = Bonjour
+farewell = Au revoir
+welcome = Bienvenue
+new_game = Commencer le jeu
+pause_game = Pause du jeu
+exit_game = Quitter
+died = Vous êtes mort
+choose_language = Choisissez une langue
+enter_language_tag = Entrez une étiquette de langue IETF valide
+you_survived = Vous avez survécu :
+victory = Vous avez terminé le jeu
+dagger = Une arme tranchante
+old_rusted_blade = Vieille Lame Rouillée
+wooden_axe = Hache en bois
+melted_blade = Ancienne Lame Blanche
+diamond_sword = Épée de Diamant
+priest_jacket = Veste de Prêtre
+requires = Requiert
+days = jours
+escape = Vous avez appuyé sur Échap
+wasd_instruction = WASD : Mouvement + affichage de l'inventaire
+inventory_instruction = X : pour entrer dans l'inventaire
+dialogue_instruction = ENTRÉE : quitter le dialogue
+#Items
+golden_chest = Coffre Doré
+teleporter = Téléporteur
+golden_key = Une Clé Dorée
+map = Une Carte
+ring_of_loyalty = L'Anneau
+teleporter = Téléporter
+great_sword = Grande Épée
+
+#Descriptions
+press_t = appuyez sur t en jeu
+use_carefully = Utilisez avec précaution
+tread_lightly = Avancez avec prudence
+key_description = Rouillée et ancienne
+hold_lightly = Tenez légèrement
+protection = La protection est toujours sage...
+map_description = L'écriture est trop petite pour être lue
+ring_of_loyalty_message = Celui qui les gouverne tous
+axe_description = lame très tranchante
+great_sword_description = Par la douleur vient le triomphe
+
+#NPC dialogue
+its_been_so_long = Cela fait si longtemps...
+since_ive_seen_a_face = Depuis que j'ai vu un visage
+its_so_dark = Il fait si sombre
+
+#Requires text
+requires_dagger = Cela nécessite une dague
+requires_old_rusted_blade = Cela nécessite une vieille lame rouillée
+requires_wooden_axe = Cela nécessite une hache en bois
+requires_melted_blade = Cela nécessite une ancienne lame blanche
+requires_diamond_sword = Cela nécessite une épée en diamant
+requires_golden_key = C'est verrouillé...
+requires_wooden_axe = Vous devez casser cela avec une hache en bois
+requires_priest_jacket = Séparez les eaux
+requires_ring_of_loyalty = Une main avide a besoin d'un objet...
+penalty_dialogue = Obstacle de pénalité ajouté...

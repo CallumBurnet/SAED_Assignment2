@@ -20,9 +20,10 @@ diamond_sword = Diamond Sword
 priest_jacket = Priest Jacket
 requires = The requires 
 days = days
-
-
-
+escape = Pressed esc
+wasd_instruction = WASD: Movement + inventory viewing
+inventory_instruction = X: to enter inventory
+dialogue_instruction = ENTER: dialogue exit
 #Items
 golden_chest = Golden Chest
 teleporter = Teleporter
@@ -30,15 +31,19 @@ golden_key = A Golden Key
 map = A map
 ring_of_loyalty = The Ring
 teleporter = Teleport
+great_sword = Great Sword
 
 #Descriptions
 press_t = press t in game
 use_carefully = Use Carefully
 tread_lightly = Tread with Caution
+key_description = Rusted and old
 hold_lightly = Hold Lightly
 protection = Protection is always wise..
 map_description = The scripture is too small to read
 ring_of_loyalty_message = The one that rules them all
+axe_description = very sharp blade
+great_sword_description = Through pain comes triump
 
 #NPC dialogue
 its_been_so_long = Its been so long...
@@ -54,5 +59,6 @@ requires_melted_blade = This requires an ancient white blade
 requires_diamond_sword = This requires a diamond sword
 requires_golden_key = Its locked...
 requires_wooden_axe = You need to break this with a wooden axe
-requires_priest_jacket = You need to part the water like moses
+requires_priest_jacket = Part the water
 requires_ring_of_loyalty = Greedy hand needs an item...
+penalty_dialogue = Penalty Obstacle added...

@@ -1,0 +1,62 @@
+#Menu
+game_name = Reino de Peppa
+greeting = Olá
+farewell = Tchau
+welcome = Bem-vindo
+new_game = Iniciar Jogo
+pause_game = Pausar Jogo
+exit_game = Sair
+died = Você Morreu
+choose_language = Escolha um Idioma
+enter_language_tag = Insira uma etiqueta de idioma IETF válida
+you_survived = Você sobreviveu:
+victory = Você venceu o jogo
+dagger = Uma arma afiada
+old_rusted_blade = Lâmina Enferrujada Antiga
+wooden_axe = Machado de Madeira
+melted_blade = Lâmina Branca Antiga
+diamond_sword = Espada de Diamante
+priest_jacket = Jaqueta de Sacerdote
+requires = Requer
+days = dias
+escape = Você pressionou esc
+wasd_instruction = WASD: Movimento + visualização do inventário
+inventory_instruction = X: para entrar no inventário
+dialogue_instruction = ENTER: sair do diálogo
+#Items
+golden_chest = Baú Dourado
+teleporter = Teletransportador
+golden_key = Uma Chave Dourada
+map = Um mapa
+ring_of_loyalty = O Anel
+teleporter = Teletransportar
+great_sword = Grande Espada
+
+#Descriptions
+press_t = pressione t no jogo
+use_carefully = Use com Cuidado
+tread_lightly = Prossiga com Cuidado
+key_description = Enferrujada e velha
+hold_lightly = Segure Levemente
+protection = Proteção é sempre sábia...
+map_description = A escritura é pequena demais para ser lida
+ring_of_loyalty_message = Aquele que governa todos
+axe_description = lâmina muito afiada
+great_sword_description = Através da dor vem o triunfo
+
+#NPC dialogue
+its_been_so_long = Faz tanto tempo...
+since_ive_seen_a_face = Desde que vi um rosto
+its_so_dark = Está tão escuro
+
+#Requires text
+requires_dagger = Isso requer uma adaga
+requires_old_rusted_blade = Isso requer uma lâmina enferrujada antiga
+requires_wooden_axe = Isso requer um machado de madeira
+requires_melted_blade = Isso requer uma lâmina branca antiga
+requires_diamond_sword = Isso requer uma espada de diamante
+requires_golden_key = Está trancado...
+requires_wooden_axe = Você precisa quebrar isso com um machado de madeira
+requires_priest_jacket = Separe as águas
+requires_ring_of_loyalty = Mão gananciosa precisa de um item...
+penalty_dialogue = Obstáculo de penalidade adicionado...

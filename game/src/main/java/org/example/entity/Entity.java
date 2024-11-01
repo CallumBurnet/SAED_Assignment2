@@ -13,18 +13,20 @@ import java.awt.Graphics2D;
 
 public class Entity implements APIEntity {
     public GamePanel gp;
-    public int x, y;
+    public int x;
+    public int y;
     public int speed;
-    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; //NOPMD its good like this
     public boolean unlocked = false;
     public String direction = "down";
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0,0,48,48); // setting a better collision box (hitbox)
-    public int solidAreaDefaultX, solidAreaDefaultY;
+    public int solidAreaDefaultX;
+    public int solidAreaDefaultY;
     public boolean collisionOn = false;
     //Image stuff
-    public BufferedImage image, image2, image3;
+    public BufferedImage image, image2, image3; //NOPMD
     public String name;
     public boolean collision = false;
     //Item specific
@@ -35,8 +37,8 @@ public class Entity implements APIEntity {
     public Entity(GamePanel gp){
         this.gp = gp;
     }
-    public void displayDialogue(){
-
+    public void displayDialogue(){ //NOPMD only here to be inherited ~ i know its not a good reason
+        
     }
     public BufferedImage setup(String imagePath){
        UtilTool uTool = new UtilTool();
@@ -53,7 +55,7 @@ public class Entity implements APIEntity {
         
         if(gp.gameState == gp.playState){
             BufferedImage image = null;
-            switch(direction){
+            switch(direction){ //NOPMD no need for a default
                 case "up":
                     if(spriteNum == 1){
                         image = up1;
@@ -154,7 +156,7 @@ public class Entity implements APIEntity {
         this.direction = direction;
     }
 
-    public void setAction(){
+    public void setAction(){//NOPMD only here to be inherited ~ i know its not a good reason
     }
     public void update(){ 
         setAction();
@@ -163,7 +165,7 @@ public class Entity implements APIEntity {
         gp.cDetector.checkObject(this, false);
         gp.cDetector.checkPlayer(this);
         if(collisionOn == false && gp.gameState == gp.playState){
-            switch (direction) {
+            switch (direction) { //NOPMD no need for a default case
                 case "up":
                     y -= speed;
 

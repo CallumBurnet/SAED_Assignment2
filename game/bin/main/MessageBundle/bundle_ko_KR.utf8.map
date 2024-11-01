@@ -1,0 +1,62 @@
+#Menu
+game_name = 페파 왕국
+greeting = 안녕하세요
+farewell = 안녕히 가세요
+welcome = 환영합니다
+new_game = 게임 시작
+pause_game = 게임 일시 중지
+exit_game = 종료
+died = 당신은 사망했습니다
+choose_language = 언어 선택
+enter_language_tag = 유효한 IETF 언어 태그를 입력하세요
+you_survived = 당신은 생존했습니다:
+victory = 게임을 이겼습니다
+dagger = 날카로운 무기
+old_rusted_blade = 오래된 녹슨 칼날
+wooden_axe = 나무 도끼
+melted_blade = 고대의 하얀 칼날
+diamond_sword = 다이아몬드 검
+priest_jacket = 사제의 자켓
+requires = 필요합니다
+days = 일
+escape = esc를 눌렀습니다
+wasd_instruction = WASD: 이동 + 인벤토리 보기
+inventory_instruction = X: 인벤토리에 들어가기
+dialogue_instruction = ENTER: 대화 종료
+#Items
+golden_chest = 황금 상자
+teleporter = 순간이동 장치
+golden_key = 황금 열쇠
+map = 지도
+ring_of_loyalty = 충성의 반지
+teleporter = 순간이동
+great_sword = 대검
+
+#Descriptions
+press_t = 게임 중에 t를 누르세요
+use_carefully = 신중하게 사용하세요
+tread_lightly = 조심스럽게 진행하세요
+key_description = 녹슬고 오래됨
+hold_lightly = 가볍게 잡으세요
+protection = 보호는 항상 현명합니다...
+map_description = 글자가 너무 작아 읽을 수 없습니다
+ring_of_loyalty_message = 모두를 지배하는 반지
+axe_description = 매우 날카로운 칼날
+great_sword_description = 고통을 넘어 승리가 온다
+
+#NPC dialogue
+its_been_so_long = 오랜만입니다…
+since_ive_seen_a_face = 얼굴을 본 지 오래되었습니다
+its_so_dark = 너무 어두워요
+
+#Requires text
+requires_dagger = 단검이 필요합니다
+requires_old_rusted_blade = 오래된 녹슨 칼날이 필요합니다
+requires_wooden_axe = 나무 도끼가 필요합니다
+requires_melted_blade = 고대의 하얀 칼날이 필요합니다
+requires_diamond_sword = 다이아몬드 검이 필요합니다
+requires_golden_key = 잠겨 있습니다...
+requires_wooden_axe = 나무 도끼로 이걸 부숴야 합니다
+requires_priest_jacket = 물을 가르세요
+requires_ring_of_loyalty = 탐욕스러운 손에 아이템이 필요합니다...
+penalty_dialogue = 패널티 장애물 추가됨...

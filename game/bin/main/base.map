@@ -5,7 +5,7 @@ goal (2,18)
 
 item "golden_key" {
   at (7,1)
-  message "hold_lightly"
+  message "key_description"
 }
 
 obstacle {
@@ -24,10 +24,10 @@ requires "wooden_axe"
 }
 item "wooden_axe" {
   at (18,7)
-  message "hold_lightly"
+  message "axe_description"
 }
 obstacle {
-at (4,16)
+at (9,16)
 requires "priest_jacket"
 }
 obstacle {

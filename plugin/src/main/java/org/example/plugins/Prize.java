@@ -39,11 +39,11 @@ public class Prize implements GamePlugin, GameEventCallback {
             default:
                 break;
         }
-        if(obstaclesDefeated + itemsCollected >=1) {
+        if(obstaclesDefeated + itemsCollected >=5) {
 
             obstaclesDefeated = 0;
             itemsCollected = 0;
-            gameAPI.addItem("Great Sword", "Through pain comes triump","sword", null);
+            gameAPI.addItem("great_sword", "great_sword_description","sword", null);
 
             
             //add item

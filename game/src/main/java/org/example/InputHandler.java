@@ -40,7 +40,6 @@ public class InputHandler implements KeyListener{
                         gp.gameState = gp.playState;
                         break;
                     case 1:
-                        System.out.println("HERE");
                         gp.gameState = gp.languageState;
                         break;
                     case 2:
@@ -93,7 +92,6 @@ public class InputHandler implements KeyListener{
                     tabPressed = false;
                 }else{
                     tabPressed = true;
-                    System.out.println("TABBY");
                 }
                 
             }
@@ -103,9 +101,8 @@ public class InputHandler implements KeyListener{
             }
         }else if(gp.gameState == gp.languageState){
             char c = e.getKeyChar();
-            System.out.println(c);
-
-
+    
+            
             // Check for Enter key to confirm input
             if (c == KeyEvent.VK_ENTER) {
                 // Process the input (e.g., change locale)

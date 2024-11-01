@@ -84,8 +84,8 @@ public void setAPIObstacle(String name, int time) {
 
     public void setNPC(){
         gp.npc[0] = new TrappedGuy(gp);
-        gp.npc[0].x = gp.tileSize*18;
-        gp.npc[0].y = gp.tileSize*10;
+        gp.npc[0].x = gp.tileSize*14;
+        gp.npc[0].y = gp.tileSize*2;
 
 
     }
@@ -103,11 +103,9 @@ public void setAPIObstacle(String name, int time) {
             String name = item.getName().toLowerCase();
     
             if (isWeapon(name)) {
-                System.out.println(item.getName() + " categorized as weapon.");
                 // Add the item to the weapon list or take any appropriate action
                 makeWeapon(item);
             } else if (isJewelry(name)) {
-                System.out.println(item.getName() + " categorized as jewelry.");
                 // Add the item to the jewelry list or take any appropriate action
                 makeJewelry(item);
             }else if(name.contains("key")){
@@ -120,7 +118,6 @@ public void setAPIObstacle(String name, int time) {
                 itemCounter ++;
             }else if(name.contains("jacket")){
                 String type = "jacket";
-                System.out.println("BUH" + name);
                 System.out.println(item.getMessage());
                 gp.obj[itemCounter] = new Weapon(gp, name, item.getMessage(),  type);
                 gp.obj[itemCounter].x =  item.getX()* gp.tileSize;
@@ -139,7 +136,6 @@ public void setAPIObstacle(String name, int time) {
             else {
                 System.out.println(item.getName() + " categorized as other.");
                 // Handle other types of items, if necessary
-                System.out.println("HALLLT UNHANDLED");
             }
         }
     }
@@ -154,7 +150,6 @@ public void setAPIObstacle(String name, int time) {
             
             
             for (int[] coordinates : coordinatesList) {
-                System.out.println("Showing: " +i);
                 gp.obstacles[i] = new Obstacle(gp, requiredItem,false, 0, requiredItem);
                 gp.obstacles[i].x = coordinates[0] * gp.tileSize;
                 gp.obstacles[i].y = coordinates[1] * gp.tileSize;
@@ -190,7 +185,7 @@ public void setAPIObstacle(String name, int time) {
         }else if(name.contains("bow")){
             type = "bow";
         }else{
-            System.out.println("IDK what you are  "+ name);
+            System.out.println("what are you");
         }
         gp.obj[itemCounter] = new Weapon(gp, name, item.getMessage(),  type);
         gp.obj[itemCounter].x =  item.getX()* gp.tileSize;
@@ -209,12 +204,13 @@ public void setAPIObstacle(String name, int time) {
         }
     }
     public void remove(String name, int index){
-        switch(name){
-            case "obstacle":
-                gp.obstacles[index] = null;
+        if(name.equals("obstacle" )){
+            gp.obstacles[index] = null;
 
         }
+
     }
+    
     
 
 }

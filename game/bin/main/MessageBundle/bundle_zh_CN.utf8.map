@@ -1,0 +1,62 @@
+#Menu
+game_name = 佩帕王国
+greeting = 你好
+farewell = 再见
+welcome = 欢迎
+new_game = 开始游戏
+pause_game = 暂停游戏
+exit_game = 退出
+died = 你死了
+choose_language = 选择语言
+enter_language_tag = 输入有效的IETF语言标签
+you_survived = 你活下来了：
+victory = 你赢得了游戏
+dagger = 锋利的武器
+old_rusted_blade = 生锈的旧刀片
+wooden_axe = 木斧
+melted_blade = 古代白刃
+diamond_sword = 钻石剑
+priest_jacket = 牧师外套
+requires = 需要
+days = 天
+escape = 按下esc
+wasd_instruction = WASD: 移动 + 查看库存
+inventory_instruction = X: 进入库存
+dialogue_instruction = ENTER: 退出对话
+#Items
+golden_chest = 黄金宝箱
+teleporter = 传送器
+golden_key = 黄金钥匙
+map = 地图
+ring_of_loyalty = 忠诚之戒
+teleporter = 传送
+great_sword = 巨剑
+
+#Descriptions
+press_t = 游戏中按下t
+use_carefully = 小心使用
+tread_lightly = 谨慎行事
+key_description = 生锈的旧钥匙
+hold_lightly = 轻轻握住
+protection = 保护总是明智的...
+map_description = 字迹太小，无法阅读
+ring_of_loyalty_message = 统领一切之戒
+axe_description = 非常锋利的刀片
+great_sword_description = 痛苦之后便是胜利
+
+#NPC dialogue
+its_been_so_long = 已经过了很长时间...
+since_ive_seen_a_face = 自从我看到一张面孔以来
+its_so_dark = 这里太黑了
+
+#Requires text
+requires_dagger = 需要一把匕首
+requires_old_rusted_blade = 需要生锈的旧刀片
+requires_wooden_axe = 需要木斧
+requires_melted_blade = 需要古代白刃
+requires_diamond_sword = 需要钻石剑
+requires_golden_key = 上锁了...
+requires_wooden_axe = 你需要用木斧打破这个
+requires_priest_jacket = 分开水流
+requires_ring_of_loyalty = 贪婪之手需要一个物品...
+penalty_dialogue = 添加了惩罚障碍...

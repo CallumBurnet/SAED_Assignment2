@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Entity npc[] = new Entity[10];
     public Obstacle obstacles[] = new Obstacle[20];
     public Goal goals[] = new Goal[10];
-    public ArrayList<Entity> entityList = new ArrayList<>();
+    public List<Entity> entityList = new ArrayList<>();
     public List<GamePlugin> plugins;
     //GameState implementation
     public int gameState;
@@ -68,10 +68,12 @@ public class GamePanel extends JPanel implements Runnable{
     private int secondTimer = 0;
     private GameConfig config;
     EnvironmentManager environmentManager = new EnvironmentManager(this);
+    
 
     public GamePanel(GameConfig config){
         //--------/
         this.gameLocal = new GameLocalization(this);
+        this.plugins = new ArrayList<>(); // Initialize plugins list
 
 
         // Print out localized strings to check for correct display
@@ -94,7 +96,6 @@ public class GamePanel extends JPanel implements Runnable{
 
         this.player = new Player(this, keyH, this.playerX, this.playerY);
         System.out.println(player.x);
-
         PluginLoader pluginLoader = new PluginLoader();
         this.gameAPI = new SimpleGameAPI(this);
         List<String> pluginsToLoad = config.getPlugins();
@@ -109,10 +110,9 @@ public class GamePanel extends JPanel implements Runnable{
             plugin.execute();
         }
         gameAPI.onMenuOptionSelected();
+       
 
        // Executes the teleport action
-
-        List<Item> items = config.getItems();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -140,6 +140,8 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread = new Thread(this);
         environmentManager.setup();
         gameThread.start();
+        
+        
         ScriptHandler scriptHandler = new ScriptHandler(gameAPI);
         List<String> scriptsToLoad = config.getScripts();
         //scriptHandler.runScript("api.createIdleObstacleAfterDelay('death', 0)");
@@ -178,13 +180,11 @@ public class GamePanel extends JPanel implements Runnable{
             if(timer >= 1000000000){
                 System.out.println("FPS:" + drawCount);
                 gameAPI.onSecondPassed();
-                System.out.println("Game State " + this.gameState);
                 drawCount =0;
                 timer = 0;
                 secondTimer ++;
                 if(secondTimer % 10 == 0){
                     secondTimer = 0;
-                    System.out.println("Seconds" + drawCount);
                     gameDate.advanceDay();
                     days++;
                 }
@@ -200,8 +200,6 @@ public class GamePanel extends JPanel implements Runnable{
                     npc[i].update();
                 }
             }
-
-        }if(gameState == pauseState){
 
         }else if(gameState == restartState){
             resetGame(config); // Pass the initial GameConfig for restart
@@ -241,7 +239,6 @@ public class GamePanel extends JPanel implements Runnable{
                         obstacles[i].decreaseTimer();
                         if(obstacles[i].getTimer()<=0){
                             gameState = deathState;
-                            System.out.println("REMOVING");
                             obstacles[i] = null;
                             obstacleTimer = 0;
 
@@ -272,7 +269,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
             //The light
             
-            //environmentManager.draw(g2,visible );
+            environmentManager.draw(g2,visible );
 
             
 
@@ -284,40 +281,52 @@ public class GamePanel extends JPanel implements Runnable{
         
     }
     public void resetGame(GameConfig config) {
-        // Reinitialize all game properties
+        if (config == null) {
+            System.out.println("Error: GameConfig is null in resetGame.");
+            return;
+        }
+    
+        // Reset game state to the title screen or initial state
         this.gameState = titleState;
-        this.playerX = config.getStart()[0] * tileSize;
-        this.playerY = config.getStart()[1] * tileSize;
         
+        // Reset player position based on the start position from the config
+        int[] startPosition = config.getStart();
+        this.playerX = startPosition[0] * tileSize;
+        this.playerY = startPosition[1] * tileSize;
+    
         // Reinitialize components that were instantiated in the constructor
-        this.tileManager = new TileManager(this);
-        this.cDetector = new CollisionDetector(this);
-        this.assetSetter = new AssetSetter(this, config);
-        this.player = new Player(this, keyH, this.playerX, this.playerY);
-        this.ui = new UI(this, keyH);
-        this.entityList.clear(); // Clear entities to avoid duplicates
+        tileManager = tileManager != null ? tileManager : new TileManager(this);
+        cDetector = cDetector != null ? cDetector : new CollisionDetector(this);
+        assetSetter = assetSetter != null ? assetSetter : new AssetSetter(this, config);
+        player = new Player(this, keyH, playerX, playerY);
+        ui = ui != null ? ui : new UI(this, keyH);
     
-        // Reset environment manager or any other instance that holds state
-        this.environmentManager = new EnvironmentManager(this);
-        this.plugins.clear(); // Clear and reload plugins if necessary
+        // Clear entity list to avoid duplicate entities
+        entityList.clear();
     
-        // Reset obstacle timer, day counter, and any other counters
-        this.obstacleTimer = 0;
-        this.days = 0;
-        this.secondTimer = 0;
+        // Reinitialize or reset environment manager and stateful variables
+        environmentManager = environmentManager != null ? environmentManager : new EnvironmentManager(this);
+        plugins = plugins != null ? plugins : new ArrayList<>();
+        plugins.clear(); // Clear plugins to avoid duplicates
     
-        // Reinitialize any specific objects or NPCs
-        this.assetSetter.setObject();
-        this.assetSetter.setNPC();
-        this.assetSetter.setObstacleToEntity();
-        this.assetSetter.setGoal();
-        
-        // Optionally re-run plugins or scripts if needed
-        for(GamePlugin plugin : plugins) {
+        // Reset timers and counters
+        obstacleTimer = 0;
+        days = 0;
+        secondTimer = 0;
+    
+        // Reset objects and entities by invoking AssetSetter methods
+        assetSetter.setObject();
+        assetSetter.setNPC();
+        assetSetter.setObstacleToEntity();
+        assetSetter.setGoal();
+    
+        // Re-run any plugins, if applicable
+        for (GamePlugin plugin : plugins) {
             plugin.execute();
         }
     
         System.out.println("Game has been reset.");
     }
+    
     
 }

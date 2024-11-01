@@ -20,7 +20,6 @@ public class Lighting {
         this.gp = gp;
         this.circleSize = circleSize;
         this.darknessFilter = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
         Area screenArea = new Area(new Rectangle2D.Double(0,0, gp.screenWidth, gp.screenHeight));
         this.screenArea = screenArea;
 
@@ -82,7 +81,7 @@ public class Lighting {
         
         
         // Set up gradient for the light circle
-        Color[] colors = { new Color(0, 0, 0, 0f), new Color(0, 0, 0, 0.25f), new Color(0, 0, 0, 0.5f), new Color(0, 0, 0, 0.75f), new Color(0, 0, 0, 0.93f) };
+        Color[] colors = { new Color(0, 0, 0, 0f), new Color(0, 0, 0, 0.25f), new Color(0, 0, 0, 0.5f), new Color(0, 0, 0, 0.75f), new Color(0, 0, 0, 0.99f) };
         float[] fractions = { 0f, 0.25f, 0.5f, 0.75f, 1f };
         RadialGradientPaint gPaint = new RadialGradientPaint(centreX, centreY, circleSize / 2, fractions, colors);
         
@@ -91,7 +90,7 @@ public class Lighting {
         gFilter.fill(lightArea);
         
         // Fill the remaining area with a solid black color for darkness
-        gFilter.setColor(new Color(0, 0, 0, 0.95f));
+        gFilter.setColor(new Color(0, 0, 0, 0.997f));
         gFilter.fill(screenArea);
         gFilter.dispose();
         

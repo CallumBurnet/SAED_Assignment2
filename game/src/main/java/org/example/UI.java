@@ -3,11 +3,13 @@ package org.example;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -15,7 +17,7 @@ import org.example.environment.GameLocalization;
 
 public class UI {
     GamePanel gp;
-    Font arial_40;
+    Font purisaB,Maru;
     Image uiBox;
     InputHandler keyH;
     BufferedImage swordImage;
@@ -31,15 +33,24 @@ public class UI {
         this.gp = gp;
         this.keyH = keyH;
         getUIImage();
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        
+        try{
+            InputStream  is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
+            purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
+            is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
+            Maru = Font.createFont(Font.TRUETYPE_FONT, is);
+
+        }catch(FontFormatException e){
+            System.out.println("FONT FAILURE");
+        }catch(IOException e){
+            System.out.println("FONT IO FAILURE");
+
+        }
         this.uiY = gp.screenWidth-250;
         this.gameLocal = gp.gameLocal;
         
     }
     public void getUIImage(){
         try{
-            System.out.println("r");
             uiBox = ImageIO.read(getClass().getResourceAsStream("/UI/ui.png"));
 
         }catch(IOException e){
@@ -48,6 +59,7 @@ public class UI {
     }
     public void draw(Graphics2D g2){
         this.g2 =g2;
+        g2.setFont(Maru);
         int frameX = 10;
         int frameY = gp.screenHeight/2;
         int frameWidth = gp.screenWidth/3;
@@ -57,8 +69,7 @@ public class UI {
             drawTitleScreen();
         }else if(gp.gameState == gp.playState){
             if(keyH.tabPressed){
-                //g2.drawImage(uiBox, 0,gp.screenWidth-250, gp.tileSize*10 , gp.tileSize*5, null);
-                //g2.drawImage(swordImage,gp.tileSize/2, gp.screenWidth-230, gp.tileSize, gp.tileSize, null);
+               
                 drawSubWindow(frameX, frameY, frameWidth, frameHeight);
                 final int slotXstart = frameX +20;
                 final int slotYstart = frameY + 20;
@@ -94,7 +105,7 @@ public class UI {
                if(itemIndex < gp.player.inventory.size()){
     
                     drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
-                    g2.setFont(g2.getFont().deriveFont(29F));
+                    g2.setFont(g2.getFont().deriveFont(35F));
                     g2.setColor(Color.white);
                     
                     String name = gp.player.inventory.get(itemIndex).name.trim();
@@ -109,7 +120,7 @@ public class UI {
                         description = description.substring(1, description.length() - 1);  // Remove leading and trailing quotes
                     }
                     
-                    g2.drawString(gameLocal.getText(description), textX, textY+ 20);
+                    g2.drawString(gameLocal.getText(description), textX, textY+ 30);
 
                }
                 drawSubWindow(gp.screenWidth- 6* gp.tileSize, gp.screenHeight- 3* gp.tileSize, 6*gp.tileSize, 3*gp.tileSize);
@@ -140,8 +151,9 @@ public class UI {
 
     }
     public void drawLanuageScreen(){
-        //Locale
-        //Add color
+        
+        g2.setFont(Maru);
+
         g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
         g2.setColor(Color.WHITE);
@@ -154,30 +166,45 @@ public class UI {
 
         //Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-
+        
+        if(commandNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
         y += gp.tileSize*4;
         if(userInput != null){
             text = userInput;
             g2.drawString(text, x, y);
 
         }
+        
+        text = gameLocal.getText("escape");
+        y += gp.tileSize*6; 
+        g2.drawString(text, x, y);
+        
     }
     public void drawSubWindow(int x, int y, int width, int height){
         Color c = new Color(0,0,0,210);
         g2.setColor(c);
         g2.fillRoundRect(x, y, width, height, 35, 35);
+        c = new Color(255,255,255);
+
+        g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
     }
     public void drawTitleScreen(){
         //Locale
-
+        g2.setFont(Maru);
+        g2.setColor(new Color(102,178,255));
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         //Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 70F));
         String text = gameLocal.getText("game_name");
-        //function to find centre for the text
         int x = getXforCenterScreen(text);
         int y = gp.tileSize*2;
+        //Shadow drawing
+        g2.setColor(Color.black);
+        g2.drawString(text, x+8, y+8);
         g2.setColor(Color.WHITE);
         g2.drawString(text, x, y);
         //-------MENU-----//
@@ -205,27 +232,31 @@ public class UI {
         if(commandNum == 2){
             g2.drawString(">", x-gp.tileSize, y);
         }
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
-        text = "------------------";
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+        text = "-----------------------------";
         y += gp.tileSize;
+       
         g2.drawString(text, x, y);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
-        text = "Movement";
+        text = gameLocal.getText("choose_language");
+
         y += gp.tileSize*2;
         g2.drawString(text, x, y);
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
-        text = "x: view inventory";
+        text = gameLocal.getText("inventory_instruction");
         y += gp.tileSize*2;
         g2.drawString(text, x, y);
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
-        text = "W A S D to move around + inventory viewing";
+        text = gameLocal.getText("wasd_instruction");
+
         y += gp.tileSize*2;
         g2.drawString(text, x, y);
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
-        text = "Enter for dialogue + Requirements";
+        text = gameLocal.getText("dialogue_instruction");
+
         y += gp.tileSize*2;
         g2.drawString(text, x, y);
 
@@ -300,11 +331,13 @@ public class UI {
         
     }
     public void drawDialogueScreen(){
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
+
         int x = gp.tileSize * 2;
         int y = gp.screenHeight/2;
         int width = gp.screenWidth - (gp.tileSize * 5);
         int height = gp.tileSize *5;
-        g2.setFont(arial_40);
+        
         drawSubWindow(x, y, width, height);
         x+= gp.tileSize;
         y+=gp.tileSize;

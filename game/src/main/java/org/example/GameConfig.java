@@ -2,10 +2,10 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
-import org.example.object.Obstacle;
+
 
 public class GameConfig {
     private int[] size;
@@ -38,20 +38,20 @@ public class GameConfig {
     public void addPlugin(String plugin){
         plugins.add(plugin);
     }
-    public ArrayList<String> getPlugins(){
+    public List<String> getPlugins(){
         return plugins;
     }
     public void addScript(String script){
         scripts.add(script);
     }
-    public ArrayList<String> getScripts(){
+    public List<String> getScripts(){
         return scripts;
     }
 
     public void addItem(Item item){
         itemList.add(item);
     }
-    public ArrayList<Item> getItems() { return itemList; }
+    public List<Item> getItems() { return itemList; }
 }
 
 

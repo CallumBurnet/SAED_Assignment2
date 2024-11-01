@@ -18,7 +18,6 @@ public class Obstacle extends Entity{
             this.timed = timed;
             this.timer = time;
             this.type = type;
-            System.out.println("OBS TYPE " + type);
             if(type.contains("key")){
                 down1 = setup("/objects/door");  
 

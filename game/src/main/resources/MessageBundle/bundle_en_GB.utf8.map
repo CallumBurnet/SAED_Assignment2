@@ -1,0 +1,62 @@
+#Menu
+game_name = Peppa Kingdom
+greeting = Hello
+farewell = See ya
+welcome = Welcome
+new_game = Start Game
+pause_game = Pause Game
+exit_game = Exit
+died = You Died
+choose_language = Choose a Language
+enter_language_tag = Enter a valid IETF language Tag
+you_survived = You survived:
+victory = You beat the game
+dagger = A sharp weapon
+old_rusted_blade = Old Rusted Blade
+wooden_axe = Wooden axe
+melted_blade = Ancient White Blade
+diamond_sword = Diamond Sword
+priest_jacket = Priest Jacket
+requires = Requires
+days = days
+escape = Pressed esc
+wasd_instruction = WASD: Movement + inventory viewing
+inventory_instruction = X: to enter inventory
+dialogue_instruction = ENTER: dialogue exit
+#Items
+golden_chest = Golden Chest
+teleporter = Teleporter
+golden_key = A Golden Key
+map = A map
+ring_of_loyalty = The Ring
+teleporter = Teleport
+great_sword = Great Sword
+
+#Descriptions
+press_t = press t in game
+use_carefully = Use Carefully
+tread_lightly = Tread with Caution
+key_description = Rusted and old
+hold_lightly = Hold Lightly
+protection = Protection is always wise...
+map_description = The scripture is too small to read
+ring_of_loyalty_message = The one that rules them all
+axe_description = very sharp blade
+great_sword_description = Through pain comes triumph
+
+#NPC dialogue
+its_been_so_long = It's been so long...
+since_ive_seen_a_face = Since I've seen a face
+its_so_dark = It's so dark
+
+#Requires text
+requires_dagger = This requires a dagger
+requires_old_rusted_blade = This requires an old rusted blade
+requires_wooden_axe = This requires a wooden axe
+requires_melted_blade = This requires an ancient white blade
+requires_diamond_sword = This requires a diamond sword
+requires_golden_key = It's locked...
+requires_wooden_axe = You need to break this with a wooden axe
+requires_priest_jacket = Part the water
+requires_ring_of_loyalty = A greedy hand needs an item...
+penalty_dialogue = Penalty obstacle added...

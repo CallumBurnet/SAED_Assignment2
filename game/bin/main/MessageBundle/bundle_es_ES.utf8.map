@@ -1,0 +1,57 @@
+#Menu
+game_name = Reino de Peppa
+greeting = Hola
+farewell = Adiós
+welcome = Bienvenido
+new_game = Comenzar Juego
+pause_game = Pausar Juego
+exit_game = Salir
+died = Has Muerto
+choose_language = Elegir un idioma
+enter_language_tag = Introduzca una etiqueta de idioma IETF válida
+you_survived = Sobreviviste:
+victory = Has ganado el juego
+dagger = Un arma afilada
+old_rusted_blade = Hoja Oxidada Vieja
+wooden_axe = Hacha de Madera
+melted_blade = Hoja Blanca Antigua
+diamond_sword = Espada de Diamante
+priest_jacket = Chaqueta de Sacerdote
+requires = Requiere
+days = días
+escape = Presionaste esc
+wasd_instruction = WASD: Movimiento + visualización de inventario
+inventory_instruction = X: para entrar en el inventario
+dialogue_instruction = ENTER: salir del diálogo
+#Items
+golden_chest = Cofre Dorado
+teleporter = Teletransportador
+golden_key = Una Llave Dorada
+map = Un mapa
+ring_of_loyalty = El Anillo
+teleporter = Teletransportar
+great_sword = Gran Espada
+
+#Descriptions
+press_t = presiona t en el juego
+use_carefully = Usar con cuidado
+tread_lightly = Avanza con precaución
+key_description = Oxidada y vieja
+hold_lightly = Sostén ligeramente
+protection = La protección siempre es sabia...
+map_description = La escritura es demasiado pequeña para leer
+ring_of_loyalty_message = El que los gobierna a todos
+axe_description = hoja muy afilada
+great_sword_description = A través del dolor viene el triunfo
+
+#NPC dialogue
+its_been_so_long = Ha pasado tanto tiempo...
+since_ive_seen_a_face = Desde que he visto una cara
+its_so_dark = Está tan oscuro
+
+#Requires text
+requires_dagger = Esto requiere una daga
+requires_old_rusted_blade = Esto requiere una hoja oxidada vieja
+requires_wooden_axe = Esto requiere una hacha de madera
+requires_melted_blade = Esto requiere una hoja blanca antigua
+requires_diamond_sword = Esto requiere una espada de diama

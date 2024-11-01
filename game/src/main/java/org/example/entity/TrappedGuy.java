@@ -15,19 +15,23 @@ public class TrappedGuy extends Entity{
     }
     public void getImage(){
        
-        up1 = setup("/player/up1");
-        left1 = setup("/player/left1");
+        up1 = setup("/npc/oldman_up_1");
+        left1 = setup("/npc/oldman_left_1");
 
-        right1 = setup("/player/right1");
+        right1 = setup("/npc/oldman_right_1");
 
-        up2 = setup("/player/up2");
 
-        down1 = setup("/player/down1");
+        up2 = setup("/npc/oldman_up_2");
 
-        down2 = setup("/player/down2");
+        down1 = setup("/npc/oldman_down_1");
 
-        left2 = setup("/player/left2");
-        right2 = setup("/player/right2");
+        down2 = setup("/npc/oldman_down_2");
+
+
+        left2 = setup("/npc/oldman_left_2");
+
+        right2 = setup("/npc/oldman_right_2");
+
 
     
     }   

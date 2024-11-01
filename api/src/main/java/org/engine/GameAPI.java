@@ -12,7 +12,7 @@ public interface GameAPI {
     APIEntity getPlayer();
     void setPlayerLocation(int x, int y);
     int[] getPlayerLocation();
-
+    void customDialogue(String dialogue);
     APIEntity[] getInventory();
     void addItem(String name, String description,String type, GamePlugin action);  // Accepts an item to add
     void removeItem(String itemName); // Accepts an item to remove

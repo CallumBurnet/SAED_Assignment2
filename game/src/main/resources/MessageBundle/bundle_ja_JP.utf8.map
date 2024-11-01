@@ -1,4 +1,3 @@
-# bundle_ja_JP.properties
 #Menu
 game_name = ペッパ王国
 greeting = こんにちは
@@ -7,27 +6,57 @@ welcome = ようこそ
 new_game = ゲーム開始
 pause_game = ゲームを一時停止
 exit_game = 終了
-died = 死にました
+died = 死亡しました
 choose_language = 言語を選択
 enter_language_tag = 有効なIETF言語タグを入力してください
-
-#Weapons
-ancient_white_dagger = 古代の白い短剣
+you_survived = 生き残りました：
+victory = ゲームに勝利しました
+dagger = 鋭い武器
 old_rusted_blade = 古びた錆びた刃
 wooden_axe = 木の斧
 melted_blade = 古代の白い刃
 diamond_sword = ダイヤモンドの剣
-
+priest_jacket = 司祭のジャケット
+requires = 必要です
+days = 日
+escape = escキーを押しました
+wasd_instruction = WASD：移動 + インベントリの表示
+inventory_instruction = X：インベントリに入る
+dialogue_instruction = ENTER：ダイアログを終了
 #Items
-golden_chest = 黄金の宝箱
+golden_chest = 金の宝箱
 teleporter = テレポーター
+golden_key = 金の鍵
+map = 地図
+ring_of_loyalty = 忠誠の指輪
+teleporter = テレポート
+great_sword = 大剣
 
 #Descriptions
-use_carefully = 注意して使ってください
-tread_lightly = 注意して進んでください
-hold_lightly = 軽く持ってください
+press_t = ゲーム内でtを押してください
+use_carefully = 注意して使用してください
+tread_lightly = 注意深く進んでください
+key_description = 古びて錆びた
+hold_lightly = 軽く握ってください
+protection = 保護は常に賢明です...
+map_description = 文字が小さすぎて読めません
+ring_of_loyalty_message = すべてを支配するもの
+axe_description = 非常に鋭い刃
+great_sword_description = 苦しみを超えて勝利が来る
 
 #NPC dialogue
-its_been_so_long = こんなに長い間...
-since_ive_seen_a_face = 誰かの顔を見たのは
-its_so_dark = とても暗いです
+its_been_so_long = 長い間…
+since_ive_seen_a_face = 顔を見たのは久しぶり
+its_so_dark = とても暗い
+
+#Requires text
+requires_dagger = これは短剣が必要です
+requires_old_rusted_blade = これは古びた錆びた刃が必要です
+requires_wooden_axe = これは木の斧が必要です
+requires_melted_blade = これは古代の白い刃が必要です
+requires_diamond_sword = これはダイヤモンドの剣が必要です
+requires_golden_key = 鍵がかかっています…
+requires_wooden_axe = 木の斧でこれを壊す必要があります
+requires_priest_jacket = 水を分けてください
+requires_ring_of_loyalty = 欲張りな手にはアイテムが必要です…
+penalty_dialogue = ペナルティの障害が追加されました…

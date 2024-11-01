@@ -9,10 +9,8 @@ import java.util.ResourceBundle;
 public class GameLocalization {
     private ResourceBundle bundle;
     private Locale currentLocale;
-    private GamePanel gamePanel;
     public GameLocalization(GamePanel gamePanel) {
         this.currentLocale = Locale.getDefault(); // Start with the system default locale
-        this.gamePanel = gamePanel;
         gamePanel.gameDate = new GameDate(this);
         loadBundle(); // Load the bundle initially
     }

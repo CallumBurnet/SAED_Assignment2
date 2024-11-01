@@ -14,7 +14,6 @@ public class Weapon extends Entity{
         this.name = name;
         switch(type.toLowerCase()){
             case "sword":
-                System.out.println("ITS A SWORD");
                 down1 = setup("/objects/diamondsword");  
                 break;
             case "dagger":
